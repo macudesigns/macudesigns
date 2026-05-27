@@ -1,0 +1,1293 @@
+/* Parametros */
+@font-face {
+    font-family: "poppins-light";
+    src: url(../font/Poppins-Light.ttf);
+}
+
+@font-face {
+    font-family: "poppins-thin";
+    src: url(../font/Poppins-Thin.ttf);
+}
+
+@font-face {
+    font-family: "poppins-bold";
+    src: url(../font/Poppins-Bold.ttf);
+}
+
+@font-face {
+    font-family: "poppins-medium";
+    src: url(../font/Poppins-Medium.ttf);
+}
+
+
+/* Normalizadores */
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    font-family: "poppins-light", Arial, Helvetica, sans-serif;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    
+    /* Lineas guias */
+    /* outline: 1px dotted rgb(255, 10, 255); */
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+body {
+    background-color: #1A1A1F;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1,
+h2 {
+    font-size: 36px;
+    line-height: 1;
+    color: #ffffff;
+}
+
+p {
+    font-size: 14px;
+    color: #ffffff;
+}
+
+
+/* Reglas recursivas */
+/* Contenedor de texto vertical */
+.topic-padre {
+    position: absolute;
+    height: 100%;
+    width: 18%;
+    margin: auto;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    overflow: hidden;
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    -moz-user-select: none;
+    /* Firefox */
+    user-select: none;
+    /* Standard syntax */
+    /*flex*/
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+/* Texto Vertical */
+.topic-hijo {
+    font-family: "poppins-thin";
+    line-height: 0.7;
+    font-size: 60px !important;
+    z-index: 10;
+    text-align: center;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    color: #696969 !important;
+    font-size: 60px;
+}
+
+/* Reglas generales */
+/* Marco */
+.marco {
+    width: 100%;
+    max-width: 1920px;
+    margin: auto;
+    position: relative;
+    overflow-x: hidden;
+}
+/* Header */
+header {
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    z-index: 1000;
+    padding: 0px 30px;
+    /*flex*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/* Logo de header */
+.logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    z-index: 4;
+}
+
+
+
+/*
+=================================================================
+--- ESTILOS PARA EL NUEVO MENÚ INTERACTIVO DE PANTALLA COMPLETA ---
+=================================================================
+*/
+
+/* Contenedor principal del menú overlay.
+   - Ocupa toda la pantalla (width: 100%, height: 100vh).
+   - Posición fija para que se mantenga aunque se haga scroll.
+   - Fondo oscuro semi-transparente para dar un efecto elegante.
+   - Oculto por defecto con 'opacity: 0' y 'visibility: hidden'.
+*/
+#fullscreen-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(26, 26, 31, 0.98); /* Negro corporativo con 98% de opacidad */
+    z-index: 1500; /* Se asegura que esté por encima del contenido pero debajo del botón del menú */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+}
+
+/* Clase 'open' que se añade con JavaScript para mostrar el menú.
+   - Cambia la opacidad a 1 para que sea visible.
+*/
+#fullscreen-menu.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Contenedor de la navegación para centrar los enlaces. */
+#fullscreen-menu nav {
+    text-align: center;
+}
+
+/* Estilo para los enlaces del menú.
+   - Fuente blanca, grande y responsiva (clamp).
+   - Animación de entrada: aparecen desde abajo (transform) y se desvanecen (opacity).
+*/
+#fullscreen-menu nav a {
+    font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Tamaño de fuente adaptable */
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Efecto al pasar el ratón sobre los enlaces. */
+#fullscreen-menu nav a:hover {
+    color: #BEBEC1; /* Color gris claro que ya usas en otros hovers. */
+}
+
+/* Animación de entrada para los enlaces cuando el menú está abierto.
+   - Se activa cuando #fullscreen-menu tiene la clase 'open'.
+   - El 'transition-delay' escalonado crea un efecto de cascada.
+*/
+#fullscreen-menu.open nav a {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#fullscreen-menu.open nav a:nth-child(1) { transition-delay: 0.2s; }
+#fullscreen-menu.open nav a:nth-child(2) { transition-delay: 0.25s; }
+#fullscreen-menu.open nav a:nth-child(3) { transition-delay: 0.3s; }
+#fullscreen-menu.open nav a:nth-child(4) { transition-delay: 0.35s; }
+#fullscreen-menu.open nav a:nth-child(5) { transition-delay: 0.4s; }
+#fullscreen-menu.open nav a:nth-child(6) { transition-delay: 0.45s; }
+
+
+/*
+=========================================================
+--- AJUSTES A ESTILOS EXISTENTES PARA COMPATIBILIDAD ---
+=========================================================
+*/
+
+/* Modificaciones al botón del menú para que siempre sea visible.
+   - 'display: block !important' sobrescribe la regla que lo oculta en escritorio.
+   - Se fija en la pantalla y se le da el z-index más alto para que esté por encima de todo.
+   - Se le quita el fondo para que el icono parezca flotar.
+*/
+.btn-menu-mob {
+    display: block !important;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 2000;
+    background-color: transparent !important; /* Hacemos el fondo transparente */
+    border: none;
+    color: #ffffff; /* Icono blanco */
+    font-size: 28px;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-menu-mob:hover {
+    transform: scale(1.1);
+}
+
+/* Evita que se pueda hacer scroll en la página cuando el menú está abierto. */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Nos aseguramos de que los menús antiguos no aparezcan. */
+.menu-desk, .menu-mobi {
+    display: none !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Footer */
+footer {
+    width: 100%;
+    height: 100vh;
+    padding-top: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-image: url(../img/macu-logo-backgroud-footer.png);
+    background-position: center bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+/* Logo footer */
+footer>img {
+    width: 40%;
+    display: block;
+    margin: auto;
+    position: relative;
+}
+
+footer span{
+    font-size: 1em;
+  color: #555559;
+}
+footer .contact {
+    margin-top: 100px;
+    color: #ffffff;
+}
+
+footer .contact>h2 {
+    line-height: 1.7;
+}
+
+footer .contact :nth-child(3) {
+    margin-top: 50px;
+}
+
+
+/* Reglas Especificas */
+/*PRINCIPAL COVER*/
+
+.cover {
+    width: 100%;
+    height: 100vh;
+    padding: 0px 30px;
+    background-image: url(../img/foto-personal.jpg);
+    background-position: 80% 0%;
+    filter: brightness(130%);
+    background-size: cover;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    position: relative;
+    /*flex*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cover article,
+.cover img,
+.cover h1 {
+    width: 100%;
+    margin: auto;
+}
+
+.cover h1 {
+    letter-spacing: 2px;
+    color: #1A1A1F;
+}
+
+.cover img,
+.cover h1 {
+    width: 100%;
+    margin: auto;
+}
+
+/*SECCION 1 SOBRE MI */
+.s1 {
+    width: 100%;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    padding-left: 30px;
+    padding-right: 60px;
+    position: relative;
+    overflow: hidden;
+}
+/* Boton de descargar cv seccion 1 */
+.s1 a {
+    width: 200px;
+    height: 60px;
+    margin-top: 20px;
+    border: 1px solid #ffffff;
+    padding: 15px 20px;
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+    /*flex*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.s1 a:hover {
+    background-color: #151414;
+    transform: scale(1.1);
+}
+
+.s1 a:visited {
+    background-color: transparent;
+}
+
+.s1 h1 {
+    color: #bebebe;
+    margin-bottom: 20px;
+}
+/* Mayusculas en titulo s1 */
+.s1 h1>span {
+    color: #ffffff;
+}
+
+/* SECCION 2 CARRUSEL */
+/* Base de la seccion */
+.s2 {
+    width: 100%;
+    height: 568px;
+    position: relative;
+    overflow: hidden;
+}
+/* Base del carrusel */
+#caro1 {
+    width: 100%;
+    height: 568px;
+}
+/* Celda del carrusel */
+#caro1 .carousel-cell {
+    width: 100%;
+    height: 568px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-right: 60px;
+    padding-left: 30px;
+    background-color: #222428;
+}
+/* Imagenes en el carrusel */
+#caro1 img {
+    display: block;
+    width: 50%;
+    height: auto;
+    margin: auto;
+    object-fit: contain;
+    background-position: center;
+}
+/* Titulos del carrusel */
+#caro1 h1 {
+    margin: 10px 0px;
+}
+/* Controles del carrusel */
+.flickity-button:disabled {
+    display: none;
+}
+
+.flickity-prev-next-button {
+    display: none;
+}
+
+.flickity-page-dots {
+    bottom: 20px;
+}
+
+.flickity-page-dots .dot {
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+    background: transparent;
+    border: 2px solid white;
+}
+
+.flickity-page-dots .dot.is-selected {
+    background: white;
+}
+
+
+/* SECCION 3 */
+/* Marco para el video */
+.s3 {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    /*flex*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+/* Titulo */
+.s3 h2 {
+    text-align: center;
+    z-index: 5;
+}
+/* Video */
+.s3 video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    z-index: 1;
+}
+/* Capa para oscurecer el video */
+.s3 .overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+}
+
+/* SECCION 4 */
+/*Secport seccion estructural*/
+.secport {
+    width: 100%;
+    overflow: hidden;
+}
+.s4 {
+    width: 100%;
+    height: 568px;
+    position: relative;
+    overflow: hidden;
+}
+/* Menu para visualizar la galeria del portafolio */
+.menu-port {
+    padding: 120px 30px;
+
+}
+
+.s4 a {
+    font-size: 36px;
+    line-height: 75px;
+    color: #555559;
+    display: block;
+}
+
+.s4 a:hover {
+    color: #BEBEC1;
+}
+/* Resalta la seleccion del menu con JS */
+.btn-active {
+    color: #ffffff !important;
+}
+/* Elemento estructural para la galeria */
+.portafoliosize {
+    padding: 30px;
+}
+
+/* S5 Galeria de portafolio */
+/* Mantiene oculta hasta que se selecciona algo en el menu de portafolio, funciona con JS */
+/* MODIFICADO: Ahora se muestra por defecto para la nueva funcionalidad de filtro. */
+.s5 {
+    display: block;
+}
+/* Marco para imagenes */
+.s5 figure {
+    width: 100%;
+    height: 225px;
+    background-color: #746B6B;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    transition: 0.2s ease-in-out;
+    border-radius: 30px;
+}
+/* Efecto para resaltar las imagenes */
+.s5 figure:hover{
+    transform: scale(1.02);
+    box-shadow: 0px 0px 15px 8px #0e0d0d;
+}
+/* Clase para ajustar el area para hacer click a toda la imagen */
+.link-ver a{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Imagenes */
+#port-1 {
+    background-image: url(../img/portfolio-cover-04.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-2 {
+    background-image: url(../img/port-2.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-3 {
+    background-image: url(../img/portfolio-cover-wide-05.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-4 {
+    background-image: url(../img/port-4.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-5 {
+    background-image: url(../img/portfolio-cover-05.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-6 {
+    background-image: url(../img/portfolio-cover-12.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-7 {
+    background-image: url(../img/port-7.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-8 {
+    background-image: url(../img/port-8.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-9 {
+    background-image: url(../img/portfolio-cover-03.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-10 {
+    background-image: url(../img/port-9.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-11 {
+    background-image: url(../img/portfolio-cover-11.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-12 {
+    background-image: url(../img/portfolio-cover-10.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-13 {
+    background-image: url(../img/portfolio-cover-wide-07.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-14 {
+    background-image: url(../img/portfolio-cover-09.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-15 {
+    background-image: url(../img/portfolio-cover-13.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-16 {
+    background-image: url(../img/portfolio-cover-02.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-17 {
+    background-image: url(../img/portfolio-cover-01.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-18 {
+    background-image: url(../img/portfolio-cover-wide-03.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-19 {
+    background-image: url(../img/port-19.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-20 {
+    background-image: url(../img/port-20.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-21 {
+    background-image: url(../img/portfolio-cover-wide-04.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-22 {
+    background-image: url(../img/port-10.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-23 {
+    background-image: url(../img/portfolio-cover-07.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-24 {
+    background-image: url(../img/portfolio-cover-wide-06.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#port-25 {
+    background-image: url(../img/portfolio-cover-08.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+
+
+
+.gallery {
+    width: 100%;
+    height: 100%;
+    /*flex*/
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* === PROJECT DETAILS FLEXBOX === */
+.project-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+  background: #232323;
+  border-radius: 15px;
+  margin: 60px 0;
+  padding: 40px 20px;
+}
+.project-detail-block {
+  flex: 1 1 0;
+  min-width: 220px;
+  max-width: 33%;
+  background: transparent;
+  text-align: left;
+}
+.project-detail-block h2 {
+  font-size: 1.5em;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.project-detail-block p {
+  color: #bebebe;
+  font-size: 1.1em;
+}
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 900px) {
+  .project-details {
+    flex-direction: column;
+    gap: 10px;
+    padding: 30px 10px;
+  }
+  .project-detail-block {
+    max-width: 100%;
+    min-width: 0;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+}
+
+/* ESTILOS RESPONSIVOS */    
+/* TABLE VIEW */
+@media (min-width: 768px) {
+    /* Normalizadores */
+    h1,
+    h2 {
+        font-size: 60px;
+    }
+    p {
+        font-size: 20px;
+    }
+    /* Header */
+    /* Menu movil */
+    .menu-mobi {
+        padding: 40px;
+        font-size: 30px;
+    }
+    .menu-mobi a {
+        color: #ffffff;
+        height: 100px;
+    }
+    .display-on {
+        transform: translateX(50%) !important;
+    }
+    /* Reglas recursivas */
+    /* Topic*/
+    .topic-hijo {
+        font-size: 125px !important;
+    }
+    /* COVER */
+    .cover {
+        background-position: 80% 0%;
+    }
+    .cover h1 {
+        font-size: 70px;
+        letter-spacing: 4px;
+    }
+    /* SECTION 1 */
+    .s1 {
+        padding-top: 230px;
+        padding-bottom: 230px;
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+    /* SECCION 2 CARRUSEL */
+    .s2 {
+        height: 1024px !important;
+    }
+    #caro1 {
+        height: 1024px !important;
+    }
+    #caro1 .carousel-cell {
+        height: 1024px !important;
+        padding-top: 100px !important;
+        padding-right: 100px !important;
+        padding-left: 100px !important;
+    }
+    #caro1 img {
+        height: 45% !important;
+    }
+    .flickity-page-dots {
+        bottom: 100px;
+    }
+    .flickity-page-dots .dot {
+        width: 20px;
+        height: 20px;
+    }
+    /* SECTION 4 */
+    .s4 {
+        height: 700px;
+        padding: 100px;
+    }
+    .s4 a {
+        font-size: 60px;
+        line-height: 100px;
+    }
+    .portafoliosize {
+        padding: 120px;
+    }
+    /* Marco para imagenes */
+    .s5 figure {
+        width: 100%;
+        height: 390px;
+        border-radius: 30px;
+    }
+    /* Footer */
+    footer {
+        padding-top: 150px;
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    footer .contact {
+        margin-top: 120px;
+    }
+}
+
+
+/* DESKTOP VIEW HD */
+@media (min-width: 1280px) {
+    /* Normalizadores */
+    h1,
+    h2 {
+        font-size: 55px;
+    }
+    p {
+        font-size: 18px;
+    }
+    /* Reglas recursivas */
+    /* TOPIC */
+    .topic-hijo {
+        font-size: 140px !important;
+    }
+    /* Header */
+    header {
+        padding: 0px 180px;
+        justify-content: flex-start;
+    }
+    .logo img {
+        width: 171px;
+        height: auto;
+        margin-right: 50px;
+    }
+    .menu-desk {
+        display: block;
+    }
+    .menu-desk a {
+        margin-right: 50px;
+    }
+    .menu-desk :last-child {
+        margin-right: 0px !important;
+    }
+    nav a {
+        color: #746B6B;
+        font-size: 18px;
+    }
+    /* Menu movil */
+    .btn-menu-mob {
+        display: none !important;
+    }
+    .menu-mobi {
+        display: none !important;
+    }
+    /* COVER */
+    .cover {
+        background-position: center;
+        filter: none !important;
+        padding: 0px 180px;
+    }
+    .cover h1 {
+        font-size: 65px;
+        letter-spacing: 3px;
+    }
+    .cover img {
+        width: 50%;
+    }
+    /* SECTION 1  Sobre mi*/
+    .s1 {
+        padding: 220px 180px;
+    }
+    /* SECCION 2 CARRUSEL */
+    .s2 {
+        height: 720px !important;
+    }
+    #caro1 {
+        height: 720px !important;
+    }
+    #caro1 .carousel-cell {
+        height: 720px !important;
+        padding: 180px !important;
+        /*flex*/
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #caro1 img {
+        height: 100% !important;
+        width: auto;
+    }
+    #caro1 article {
+        width: 70%;
+        margin-right: 20px;
+    }
+    #caro1 img {
+        order: 1;
+    }
+    .flickity-page-dots {
+        bottom: 100px;
+        left: -400px;
+    }
+    /* SECTION 4 */
+    .s4 {
+        padding: 0px 130px;
+        height: 280px;
+        position: relative;
+        overflow: visible;
+    }
+    /* Menu portafolio */
+    .menu-port {
+        height: 100%;
+        width: 60%;
+        /*flex*/
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .menu-port a {
+        margin-right: 50px;
+    }
+    .menu-port :last-child {
+        margin-right: 0px !important;
+    }
+    .s4 a {
+        font-size: 55px;
+        line-height: 70px;
+        display: inline;
+    }
+    .portafoliosize {
+        padding: 20px 180px 180px;
+    }
+    /* Ajusta el texto vertical en este viewport */
+    .topvar {
+        position: absolute;
+        top: 640px;
+        overflow: visible;
+    }
+    /* S5 Galeria de portafolio */
+    /* MODIFICADO: Se elimina la regla nth-child. Ahora se maneja con JavaScript para un diseño dinámico. */
+    .s5 .gallery figure.wide { width: 100%; }
+
+    .s5 figure {
+        width: 48.5%;
+        height: 450px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 30px;
+    }
+    /* Footer*/
+    footer {
+        padding: 180px;
+    }
+    footer .contact {
+        margin-top: 50px;
+    }
+    footer>img {
+        width: 30%;
+    }
+}
+
+
+/* DESKTOP VIEW 1080 */
+@media (min-width: 1920px) {
+    /* Normalizadores */
+    h1,
+    h2 {
+        font-size: 77px;
+    }
+    p {
+        font-size: 24px;
+    }
+    /* Reglas recursivas */
+    /* TOPIC */
+    .topic-hijo {
+        font-size: 180px !important;
+    }
+    /* Header */
+    header {
+        padding: 0px 250px;
+    }
+    nav a {
+        font-size: 25px !important;
+    }
+    /* COVER */
+    .cover {
+        padding: 0px 250px;
+    }
+    .cover h1 {
+        font-size: 77px;
+        letter-spacing: 4px;
+    }
+    /* SECTION 1 */
+    .s1 {
+        padding: 350px 250px;
+    }
+    /* SECCION 2 CARRUSEL */
+    .s2 {
+        height: 1080px !important;
+    }
+    #caro1 {
+        height: 1080px !important;
+    }
+    #caro1 .carousel-cell {
+        height: 1080px !important;
+        padding: 250px !important;
+        /*flex*/
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #caro1 article {
+        width: 45% !important;
+        margin-right: 20px;
+    }
+    #caro1 img {
+        order: 1;
+    }
+    #caro1 .carousel-cell h1 {
+        font-size: 77px;
+    }
+    #caro1 .carousel-cell p {
+        font-size: 24px;
+    }
+    .flickity-page-dots {
+        bottom: 250px;
+        left: -640px;
+    }
+    /* SECTION 4 */
+    .s4 {
+        padding: 0px 250px;
+        height: 300px;
+    }
+    .s4 a {
+        font-size: 60px;
+        line-height: 70px;
+        display: inline;
+    }
+    /* Ajusta la posicio del texto vertical en este viewport */
+    .topvar {
+        position: absolute;
+        top: 750px;
+        overflow: visible;
+    }
+    .portafoliosize {
+        padding: 20px 350px 350px;
+    }
+    /* Footer*/
+    footer {
+        padding: 250px;
+    }
+    footer .contact {
+        margin-top: 80px;
+    }
+    footer>img {
+        width: 25%;
+    }
+}
+
+/* Bullet point para el título de cada item en .learning-list */
+.learning-list .course-title {
+  position: relative;
+  padding-left: 1.2em;
+}
+.learning-list .course-title::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #bebebe;
+  font-size: 1.2em;
+  line-height: 1;
+  top: 0;
+}
+
+/* Margen entre títulos y listas .learning-list */
+h2 + .learning-list,
+h2 + ul.learning-list {
+  margin-top: 20px;
+}
+
+/* Margen inferior de 20px para títulos que van seguidos de un párrafo */
+h2 + p,
+h1 + p {
+  margin-bottom: 20px;
+}
+
+/* Ajuste para títulos en .project-content (sobrescribe si hay conflicto) */
+.project-content h2 {
+  margin-bottom: 0; /* Elimina margen por defecto si existe */
+}
+.project-content h2 + p {
+  margin-bottom: 20px;
+}
+
+/* === LISTA DE CURSOS: "Nunca dejo de aprender" === */
+.learning-list {
+  list-style: none;
+  padding-left: 0; /* Quita el padding para evitar desplazamiento */
+  margin-top: 1rem;
+}
+
+/* Elimina el bullet del li */
+.learning-list li {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding-left: 0;
+}
+
+/* Bullet point SOLO para el título */
+.learning-list .course-title {
+  position: relative;
+  padding-left: 1.2em;
+}
+.learning-list .course-title::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #fff;
+  font-size: 1.2em;
+  line-height: 1;
+  top: 0;
+}
+
+
+/*
+=================================================================
+--- ESTILOS PARA EL NUEVO MENÚ INTERACTIVO DE PANTALLA COMPLETA ---
+=================================================================
+*/
+
+/* Contenedor principal del menú overlay.
+   - Ocupa toda la pantalla (width: 100%, height: 100vh).
+   - Posición fija para que se mantenga aunque se haga scroll.
+   - Fondo oscuro semi-transparente para dar un efecto elegante.
+   - Oculto por defecto con 'opacity: 0' y 'visibility: hidden'.
+*/
+#fullscreen-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(26, 26, 31, 0.98); /* Negro corporativo con 98% de opacidad */
+    z-index: 1500; /* Se asegura que esté por encima del contenido pero debajo del botón del menú */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+}
+
+/* Clase 'open' que se añade con JavaScript para mostrar el menú.
+   - Cambia la opacidad a 1 para que sea visible.
+*/
+#fullscreen-menu.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Contenedor de la navegación para centrar los enlaces. */
+#fullscreen-menu nav {
+    text-align: center;
+}
+
+/* Estilo para los enlaces del menú.
+   - Fuente blanca, grande y responsiva (clamp).
+   - Animación de entrada: aparecen desde abajo (transform) y se desvanecen (opacity).
+*/
+#fullscreen-menu nav a {
+    font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Tamaño de fuente adaptable */
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Efecto al pasar el ratón sobre los enlaces. */
+#fullscreen-menu nav a:hover {
+    color: #BEBEC1; /* Color gris claro que ya usas en otros hovers. */
+}
+
+/* Animación de entrada para los enlaces cuando el menú está abierto.
+   - Se activa cuando #fullscreen-menu tiene la clase 'open'.
+   - El 'transition-delay' escalonado crea un efecto de cascada.
+*/
+#fullscreen-menu.open nav a {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#fullscreen-menu.open nav a:nth-child(1) { transition-delay: 0.2s; }
+#fullscreen-menu.open nav a:nth-child(2) { transition-delay: 0.25s; }
+#fullscreen-menu.open nav a:nth-child(3) { transition-delay: 0.3s; }
+#fullscreen-menu.open nav a:nth-child(4) { transition-delay: 0.35s; }
+#fullscreen-menu.open nav a:nth-child(5) { transition-delay: 0.4s; }
+#fullscreen-menu.open nav a:nth-child(6) { transition-delay: 0.45s; }

@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Navia | MacuDesigns</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="img/macu-favicon.png" />
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- CSS flickty -->
+    <link rel="stylesheet" href="css/flickity.css" />
+    <!-- CSS Propio -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+        /*
+        =================================================================
+        --- ESTILOS ADAPTADOS DE INDEX.HTML ---
+        =================================================================
+        */
+        body {
+            background-color: #1A1A1F;
+        }
+
+        /* Contenedor principal con ancho máximo */
+        .marco {
+            width: 100%;
+            max-width: 1920px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        }
+        
+        #main-content {
+            position: relative;
+            z-index: 2;
+            background-color: #1A1A1F;
+        }
+
+        /* Clase base para las nuevas secciones */
+        .nueva-seccion {
+            width: 100%;
+            padding: 80px 30px;
+            position: relative;
+            overflow: hidden;
+            background-color: #1A1A1F; /* Añadido para consistencia */
+        }
+        
+        .nueva-seccion h1, .nueva-seccion h2 {
+            font-family: "poppins-bold", Arial, Helvetica, sans-serif;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .nueva-seccion p {
+            margin-bottom: 20px;
+            color: #bebebe;
+        }
+
+        /* Botón CTA */
+        .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            border: 1px solid #ffffff;
+            padding: 15px 30px;
+            color: #ffffff;
+            font-size: 18px;
+            border-radius: 15px;
+            transition: 0.3s ease-in-out;
+            background-color: transparent;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #ffffff;
+            color: #1A1A1F;
+            transform: scale(1.05);
+        }
+        
+        /*
+        =================================================================
+        --- ESTILOS PARA LA SECCIÓN HERO (COVER) ---
+        =================================================================
+        */
+        .cover {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .cover-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        .cover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+        .cover article {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+        }
+        .cover article img {
+            max-width: 180px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .cover h1 {
+            font-family: "poppins-light", Arial, Helvetica, sans-serif;
+            font-size: clamp(2.2rem, 7vw, 4.5rem);
+            color: #ffffff;
+            line-height: 1.2;
+        }
+        .cover p.subtitle {
+             font-family: "poppins-light";
+             font-size: clamp(1rem, 4vw, 1.25rem);
+             color: #bebebe;
+             margin-top: 15px;
+        }
+
+        /*
+        =================================================================
+        --- ESTILOS PARA HEADER Y MENÚ INTERACTIVO ---
+        =================================================================
+        */
+        header {
+            width: 100%;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        header .logo {
+            max-width: 150px;
+            width: 40%;
+        }
+        header .logo img {
+            width: 100%;
+            height: auto;
+        }
+        
+        #fullscreen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(26, 26, 31, 0.98);
+            z-index: 1500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+        }
+        #fullscreen-menu.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .menu-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+        .menu-logo img {
+            height: 40px;
+            width: auto;
+        }
+        #fullscreen-menu nav a {
+            font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        #fullscreen-menu.open nav a {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #fullscreen-menu.open nav a:nth-child(1) { transition-delay: 0.2s; }
+        #fullscreen-menu.open nav a:nth-child(2) { transition-delay: 0.25s; }
+        #fullscreen-menu.open nav a:nth-child(3) { transition-delay: 0.3s; }
+        #fullscreen-menu.open nav a:nth-child(4) { transition-delay: 0.35s; }
+        #fullscreen-menu.open nav a:nth-child(5) { transition-delay: 0.4s; }
+
+        .btn-menu-mob {
+            display: block !important;
+            position: relative; 
+            top: auto;
+            right: auto;
+            z-index: 2000;
+            background-color: transparent !important;
+            border: none;
+            color: #ffffff;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .close-menu-btn {
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 32px;
+            cursor: pointer;
+            opacity: 0;
+        }
+        #fullscreen-menu.open .close-menu-btn {
+            opacity: 1;
+            transition: opacity 0.3s ease 0.2s;
+        }
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        /*
+        =================================================================
+        --- ESTILOS PARA SECCIONES DE PROYECTO ---
+        =================================================================
+        */
+        .fullwidth-image {
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #333333;
+        }
+        
+        .project-details {
+            padding-top: 0;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            text-align: left;
+        }
+        .grid-item {
+            border-top: 1px solid #555559;
+            padding-top: 20px;
+        }
+        .grid-item-numero {
+            font-family: "poppins-light", Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            color: #bebebe;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .grid-item h3 {
+            font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+            font-size: 22px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .grid-item p {
+            color: #bebebe;
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .gallery-grid .grid-item {
+            overflow: hidden;
+            border-radius: 12px;
+            background-color: #444444;
+            border-top: none;
+            padding-top: 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery-grid .grid-item:hover {
+            transform: scale(1.03);
+        }
+        .gallery-grid .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /*
+        =================================================================
+        --- ESTILOS PARA FOOTER ---
+        =================================================================
+        */
+        footer#contact {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .footer-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+        .footer-content-wrapper > img {
+            margin-bottom: 60px;
+            width: 50%;
+            max-width: 300px;
+            height: auto;
+        }
+        .footer-primary-contact {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        .footer-primary-contact a {
+            font-family: "poppins-medium", sans-serif;
+            font-size: 24px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background-color: #555559;
+            margin-bottom: 40px;
+        }
+        .footer-secondary-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 30px;
+        }
+        .footer-secondary-links a {
+            font-family: "poppins-light", sans-serif;
+            font-size: 16px;
+            color: #bebebe;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .footer-secondary-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            background: #ffffff;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.4s ease;
+        }
+        .footer-secondary-links a:hover {
+            color: #ffffff;
+        }
+        .footer-secondary-links a:hover::after {
+            width: 100%;
+        }
+        footer#contact span#copyright-line {
+             padding-bottom: 15px;
+             margin-top: 60px;
+             position: relative;
+             width: 100%;
+             text-align: center;
+             color: #555559;
+        }
+        /* Esto asegura que el texto vertical del footer se muestre */
+        footer#contact .topic-padre {
+            position: absolute;
+            height: 100%;
+            width: 18%;
+            margin: auto;
+            top: 0px;
+            bottom: 0px;
+            right: 0px;
+            overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        footer#contact .topic-hijo {
+            font-family: "poppins-thin";
+            line-height: 0.7;
+            font-size: 60px !important;
+            z-index: 10;
+            text-align: center;
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            color: #696969 !important;
+        }
+
+
+        /* --- ESTILOS CARRUSEL HORIZONTAL --- */
+        .horizontal-scroll-section {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* La altura es la del viewport */
+            overflow: hidden;
+        }
+        .sticky-carousel-wrapper {
+            display: flex;
+            height: 100%;
+            width: 400%; /* 100% por cada imagen */
+            will-change: transform;
+        }
+        .carousel-panel {
+            width: 100vw;
+            height: 100vh;
+        }
+        .carousel-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /*
+        =================================================================
+        --- ESTILOS RESPONSIVOS ---
+        =================================================================
+        */
+        @media (min-width: 768px) {
+            .nueva-seccion {
+                padding: 120px 100px;
+            }
+            .project-details {
+                padding-top: 0;
+            }
+            .grid-layout {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 60px;
+            }
+            .footer-primary-contact {
+                flex-direction: row;
+                gap: 60px;
+            }
+            header { padding: 0 60px; }
+            .close-menu-btn { right: 60px; }
+            footer#contact .topic-hijo {
+                font-size: 125px !important;
+            }
+            .cta-button {
+                font-size: 20px;
+            }
+            .cover article img {
+                max-width: 220px;
+            }
+        }
+        @media (min-width: 1280px) {
+            .nueva-seccion {
+                padding: 150px 180px;
+            }
+            .project-details {
+                padding-top: 0;
+            }
+            header { padding: 0 100px; }
+            .close-menu-btn { right: 100px; }
+            footer#contact .topic-hijo {
+                font-size: 140px !important;
+            }
+        }
+        @media (min-width: 1920px) {
+            .nueva-seccion {
+                padding: 180px 250px;
+            }
+            .project-details {
+                padding-top: 0;
+            }
+            footer#contact .topic-hijo {
+                font-size: 180px !important;
+            }
+        }
+
+        .video-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-family: "poppins-bold", Arial, Helvetica, sans-serif;
+            transition: opacity 0.3s ease;
+        }
+        .video-link:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- ========= INICIO: NUEVO MENÚ DE PANTALLA COMPLETA ========= -->
+    <div id="fullscreen-menu">
+        <button class="close-menu-btn" id="closeMenuBtn">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        <div class="menu-content-wrapper">
+            <a href="index.html" class="menu-logo">
+                <img src="img/macu-logo-lightgrey-footer.png" alt="maculogo" />
+            </a>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="about-me.html">Sobre mi</a>
+                <a href="index.html#portfolio">Portafolio</a>
+                <a href="gallery.html">Galeria</a>
+                <a href="#contact">Contacto</a>
+                <!-- <a href="#">EN</a>-->
+            </nav>
+        </div>
+    </div>
+    <!-- ========= FIN: NUEVO MENÚ DE PANTALLA COMPLETA ========= -->
+
+    <div class="marco">
+        <div id="main-content">
+            <!-- 
+            =================================================================
+            --- INICIO: SECCIÓN HEADER ---
+            =================================================================
+            -->
+            <header>
+                <a href="index.html" class="logo">
+                    <img src="img/logo-macu-white@2x.png" alt="maculogo" />
+                </a>
+                <button class="btn-menu-mob" id="btnMobil">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+            <!-- 
+            =================================================================
+            --- FIN: SECCIÓN HEADER ---
+            =================================================================
+            -->
+
+            <!-- 
+            =================================================================
+            --- INICIO: SECCIÓN HERO (COVER) ---
+            =================================================================
+            -->
+            <main class="cover">
+                <div class="cover-overlay"></div>
+                <video class="cover-video" poster="portfolio/navia/video-clips-poster-12compressed.jpg" autoplay muted loop playsinline>
+                    <source src="portfolio/navia/assembly-navia.mp4" type="video/mp4">
+                    Tu navegador no soporta videos.
+                </video>
+                <article>
+                    <h1>Navia</h1>
+                    <p class="subtitle">Un escudo digital en tu bolsillo: diseño que protege, comunica y simplifica.</p>
+                </article>
+            </main>
+            <!-- 
+            =================================================================
+            --- FIN: SECCIÓN HERO (COVER) ---
+            =================================================================
+            -->
+
+            <!-- Contenido del Proyecto -->
+            <section class="nueva-seccion project-overview">
+                <h2>Resumen del proyecto</h2>
+                <p>Navia es un dispositivo VPN portátil diseñado para ofrecer una conexión segura y privada en cualquier lugar, sin configuraciones complicadas. Inspirado en la forma de un escudo, su diseño transmite protección, confianza y seguridad digital. Mi trabajo se centró en el diseño industrial y gráfico del dispositivo y su comunicación visual, integrando estética, ergonomía y facilidad de uso en un solo producto.</p>
+            </section>
+
+            <section class="fullwidth-image" style="background-image: url('portfolio/navia/navia-5compressed.jpg');"></section>
+
+            <section class="nueva-seccion project-details">
+                <div class="grid-layout">
+                    <div class="grid-item">
+                        <h3>Año</h3>
+                        <p>2016 – 2017</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Mi rol</h3>
+                        <p><strong>Diseño industrial</strong> de la carcasa inspirada en un escudo. <strong>Creación de renders y fotomontajes</strong> para la comunicación visual. <strong>Diseño de la identidad gráfica</strong> y el logotipo. <strong>Preparación de infografías</strong> y material gráfico. <strong>Desarrollo de un vídeo de motion graphics</strong> para explicar el funcionamiento.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Objetivo</h3>
+                        <p>Crear un dispositivo VPN portátil con un diseño distintivo que comunique seguridad, sea fácil de usar y proporcione privacidad digital sin complicaciones técnicas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="nueva-seccion project-problem">
+                <h2>El problema</h2>
+                <p>La mayoría de las soluciones de VPN son aplicaciones o configuraciones técnicas que pueden resultar complejas para usuarios no expertos. Además, los dispositivos de seguridad física suelen tener un diseño genérico que no comunica su función ni genera confianza.</p>
+            </section>
+
+            <!-- ========= INICIO: NUEVAS SECCIONES ========= -->
+            <section class="nueva-seccion project-users">
+                <h2>Usuarios</h2>
+                <p>Personas y empresas que necesitan una conexión segura en redes públicas, viajeros frecuentes, profesionales remotos y cualquier usuario que priorice la privacidad digital.</p>
+            </section>
+
+            <section class="nueva-seccion project-use-cases">
+                <h2>Casos de uso</h2>
+                <div class="grid-layout">
+                    <div class="grid-item">
+                        <h3>Protección en redes públicas</h3>
+                        <p>Conexión segura en aeropuertos, cafeterías y hoteles.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Privacidad en viajes</h3>
+                        <p>Mantenimiento de datos seguros al trabajar de forma remota.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Facilidad de uso</h3>
+                        <p>Conexión instantánea sin configuraciones técnicas.</p>
+                    </div>
+                </div>
+            </section>
+            <!-- ========= FIN: NUEVAS SECCIONES ========= -->
+
+            <section class="fullwidth-image" style="background-image: url('portfolio/navia/navia-1compressed.jpg');"></section>
+
+            <section class="nueva-seccion project-process">
+                <h2>Proceso de diseño</h2>
+                <div class="grid-layout">
+                    <div class="grid-item"><span class="grid-item-numero">01</span><h3>Investigación</h3><p>Estudio de dispositivos VPN existentes y análisis de las necesidades de los usuarios.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">02</span><h3>Conceptualización</h3><p>Definición de un lenguaje visual inspirado en escudos para transmitir protección.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">03</span><h3>Modelado 3D</h3><p>Creación de la carcasa con proporciones ergonómicas y líneas limpias.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">04</span><h3>Diseño Gráfico</h3><p>Desarrollo del logotipo y elementos visuales coherentes con el concepto de seguridad.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">05</span><h3>Visualización</h3><p>Creación de renders, fotomontajes y animaciones para presentar el producto.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">06</span><h3>Prototipado</h3><p>Creación de un modelo físico para validar la forma y la experiencia de uso.</p></div>
+                </div>
+            </section>
+
+            <section class="nueva-seccion project-gallery">
+                <h2>Galería</h2>
+                <div class="gallery-grid">
+                    <div class="grid-item" data-img="portfolio/navia/navia-2compressed.jpg"><img src="portfolio/navia/navia-2compressed.jpg" alt="Imagen 1" /></div>
+                    <div class="grid-item" data-img="portfolio/navia/navia-3compressed.jpg"><img src="portfolio/navia/navia-3compressed.jpg" alt="Imagen 2" /></div>
+                    <div class="grid-item" data-img="portfolio/navia/navia-4compressed.jpg"><img src="portfolio/navia/navia-4compressed.jpg" alt="Imagen 3" /></div>
+                    <div class="grid-item" data-img="portfolio/navia/navia-6compressed.jpg"><img src="portfolio/navia/navia-6compressed.jpg" alt="Imagen 4" /></div>
+                    <div class="grid-item" data-img="portfolio/navia/navia-7compressed.jpg"><img src="portfolio/navia/navia-7compressed.jpg" alt="Imagen 5" /></div>
+                    <div class="grid-item" data-img="portfolio/navia/navia-8compressed.jpg"><img src="portfolio/navia/navia-8compressed.jpg" alt="Imagen 6" /></div>
+                </div>
+            </section>
+
+            <section class="nueva-seccion project-features">
+                <h2>Características clave</h2>
+                <div class="grid-layout">
+                    <div class="grid-item"><h3>Forma Inspirada en un Escudo</h3><p>Transmite protección y confianza.</p></div>
+                    <div class="grid-item"><h3>Diseño Portátil y Ergonómico</h3><p>Fácil de transportar y cómodo de manejar.</p></div>
+                    <div class="grid-item"><h3>Acabados de Calidad</h3><p>Materiales y texturas que refuerzan la percepción de robustez.</p></div>
+                    <div class="grid-item"><h3>Simplicidad de Uso</h3><p>Encender y conectar, sin necesidad de configuraciones técnicas.</p></div>
+                </div>
+            </section>
+
+            <section class="fullwidth-image" style="background-image: url('portfolio/navia/navia-9compressed.jpg');"></section>
+
+            <section class="nueva-seccion project-outcome">
+                <h2>Resultados</h2>
+                <p>Se desarrolló un prototipo funcional que materializó la propuesta estética y funcional del dispositivo. El diseño final logró comunicar seguridad y simplicidad, diferenciándose de otros productos VPN en el mercado.</p>
+            </section>
+
+            <section class="horizontal-scroll-section">
+                <div class="sticky-carousel-wrapper">
+                    <div class="carousel-panel"><img src="portfolio/navia/navia-10compressed.jpg" alt="Imagen Carrusel 1" /></div>
+                    <div class="carousel-panel"><img src="portfolio/navia/navia-11compressed.jpg" alt="Imagen Carrusel 2" /></div>
+                    <div class="carousel-panel"><img src="portfolio/navia/navia-12compressed.jpg" alt="Imagen Carrusel 3" /></div>
+                    <div class="carousel-panel"><img src="portfolio/navia/navia-13compressed.jpg" alt="Imagen Carrusel 4" /></div>
+                </div>
+            </section>
+
+            <section class="nueva-seccion project-learnings" style="text-align: center;">
+                <h2>Lo que aprendí</h2>
+                <p>Este proyecto me permitió profundizar en el diseño industrial aplicado a tecnología portátil, explorar cómo la forma y los materiales comunican confianza y seguridad, y mejorar mis habilidades en motion graphics. Trabajar en Navia me enseñó el valor de integrar comunicación visual, ergonomía y tecnología en un solo diseño.</p>
+                <div>
+                    <a href="#contact" class="cta-button">Contáctame</a>
+                    <a href="project_trakkem_pro.html" class="cta-button">Siguiente proyecto</a>
+                </div>
+            </section>
+        </div> <!-- Fin #main-content -->
+        
+        <!-- 
+        =================================================================
+        --- INICIO: SECCIÓN FOOTER ---
+        =================================================================
+        -->
+        <footer id="contact">
+            <div class="topic-padre"><h1 class="topic-hijo">contacto</h1></div>
+            <div class="footer-content-wrapper">
+                <img src="img/macu-logo-lightgrey-footer.png" alt="macu-logo-lightgrey-footer" />
+                <div class="footer-primary-contact">
+                    <a href="tel:+34624425822">+34 624 425 822</a>
+                    <a href="mailto:info@macudesigns.com">info@macudesigns.com</a>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-secondary-links">
+                    <a href="index.html">Inicio</a>
+                    <a href="about-me.html">Sobre mi</a>
+                    <a href="index.html#portfolio">Portafolio</a>
+                    <a href="gallery.html">Galeria</a>
+                    <a href="#contact">Contacto</a>
+                  <a href="https://www.linkedin.com/in/macudesigns/" target="_blank">LinkedIn</a>
+                  <a href="https://www.instagram.com/macudesigns_/" target="_blank">Instagram</a>
+                    <!--  <a href="#" target="_blank">EN</a>-->
+                </div>
+                <span id="copyright-line">
+  © <span id="copyright-year"></span> MacuDesign | Los derechos de los diseños, productos y proyectos mostrados en este portafolio 
+  corresponden a los clientes y empresas que financiaron su desarrollo. 
+  El material aquí publicado tiene únicamente fines de presentación y exhibición profesional, 
+  sin implicar apropiación ni cesión de la propiedad intelectual de terceros. 
+  | Moisés A. Carmona U.
+</span>
+
+            </div>
+        </footer>
+        <!-- 
+        =================================================================
+        --- FIN: SECCIÓN FOOTER ---
+        =================================================================
+        -->
+    </div> <!-- fin marco -->
+
+    <!-- Lightbox markup -->
+    <div id="lightbox-overlay" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.95);justify-content:center;align-items:center;">
+        <img id="lightbox-img" src="" alt="" style="max-width:90vw;max-height:90vh;border-radius:20px;box-shadow:0 0 40px #000;display:none;">
+        <div id="lightbox-video" style="display:none;width:90vw;max-width:960px;">
+            <div style="position:relative;padding-bottom:56.25%;height:0;">
+                <img id="video-cover" src="" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:20px;transition:opacity 0.3s ease;">
+                <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:20px;" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        <span id="lightbox-close" style="position:absolute;top:30px;right:40px;font-size:3rem;color:#fff;cursor:pointer;font-family:sans-serif;">&times;</span>
+    </div>
+
+    <!-- JS Librerias -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- SCRIPT PARA EL NUEVO MENÚ ---
+        const menuButton = document.getElementById('btnMobil');
+        const closeMenuButton = document.getElementById('closeMenuBtn');
+        const menuOverlay = document.getElementById('fullscreen-menu');
+        const body = document.body;
+
+        if (menuButton && menuOverlay && closeMenuButton) {
+            const toggleMenu = () => {
+                body.classList.toggle('menu-open');
+                menuOverlay.classList.toggle('open');
+            };
+            menuButton.addEventListener('click', (e) => { e.preventDefault(); toggleMenu(); });
+            closeMenuButton.addEventListener('click', (e) => { e.preventDefault(); toggleMenu(); });
+            menuOverlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => { if (menuOverlay.classList.contains('open')) toggleMenu(); });
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape" && menuOverlay.classList.contains('open')) toggleMenu();
+            });
+        }
+        
+        // --- SCRIPT PARA ACTUALIZAR AÑO DEL COPYRIGHT ---
+        const yearSpan = document.getElementById("copyright-year");
+        if(yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+        // --- ANIMACIONES CON GSAP ---
+        gsap.registerPlugin(ScrollTrigger);
+        const animationDefaults = { duration: 1, autoAlpha: 0, y: 50, ease: 'power3.out' };
+
+        // Animación Hero
+        gsap.from(".cover article > *", { ...animationDefaults, stagger: 0.2, delay: 0.5 });
+
+        // Animación para todas las secciones .nueva-seccion
+        document.querySelectorAll('.nueva-seccion').forEach(section => {
+            gsap.from(section.querySelectorAll("h2, p, .grid-layout, .gallery-grid, .cta-button"), {
+                ...animationDefaults,
+                stagger: 0.15,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+
+        // --- FUNCIONALIDAD LIGHTBOX MEJORADA ---
+        const gridItems = document.querySelectorAll(".gallery-grid .grid-item");
+        const lightbox = document.getElementById('lightbox-overlay');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxVideo = document.getElementById('lightbox-video');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const videoLinks = document.querySelectorAll('.video-link');
+
+        // Función para cerrar el lightbox
+        const closeLightbox = () => {
+            lightbox.style.display = 'none';
+            lightboxImg.style.display = 'none';
+            lightboxVideo.style.display = 'none';
+            // Detener el video si está reproduciéndose
+            const iframe = lightboxVideo.querySelector('iframe');
+            if (iframe) {
+                iframe.src = '';
+            }
+        };
+
+        // Manejador para imágenes
+        gridItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const imgSrc = this.getAttribute('data-img');
+                if (imgSrc) {
+                    lightboxVideo.style.display = 'none';
+                    lightboxImg.style.display = 'block';
+                    lightboxImg.src = imgSrc;
+                    lightbox.style.display = 'flex';
+                }
+            });
+        });
+
+        // Manejador para videos
+        videoLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const videoId = this.getAttribute('data-video');
+                const coverImage = this.getAttribute('data-cover');
+                
+                if (videoId) {
+                    lightboxImg.style.display = 'none';
+                    lightboxVideo.style.display = 'block';
+                    
+                    const iframe = lightboxVideo.querySelector('iframe');
+                    const cover = lightboxVideo.querySelector('#video-cover');
+                    
+                    // Mostrar cover image primero
+                    if (coverImage && cover) {
+                        cover.src = coverImage;
+                        cover.style.opacity = '1';
+                    }
+                    
+                    // Cargar el video
+                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                    lightbox.style.display = 'flex';
+                    
+                    // Ocultar cover cuando el video esté listo
+                    iframe.addEventListener('load', function() {
+                        if (cover) cover.style.opacity = '0';
+                    });
+                }
+            });
+        });
+
+        // Eventos para cerrar el lightbox
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // --- SCRIPT CARRUSEL HORIZONTAL (CORREGIDO CON GSAP) ---
+        const horizontalSection = document.querySelector('.horizontal-scroll-section');
+        const carouselWrapper = horizontalSection ? horizontalSection.querySelector('.sticky-carousel-wrapper') : null;
+
+        if (horizontalSection && carouselWrapper) {
+            gsap.to(carouselWrapper, {
+                x: () => -(carouselWrapper.scrollWidth - window.innerWidth),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: horizontalSection,
+                    start: "top top",
+                    end: () => "+=" + (carouselWrapper.scrollWidth - window.innerWidth),
+                    scrub: true,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>

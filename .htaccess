@@ -1,0 +1,8 @@
+
+# BEGIN WePanel
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^macudesigns\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.macudesigns\.com$
+RewriteRule ^en\/index\.html$ "https\:\/\/macudesigns\.com\/" [R=301,L]
+# END WePanel
+

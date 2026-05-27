@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <title>MacuDesigns - Sobre Mí</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="img/macu-favicon.png" />
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- CSS Propio (Asegúrate de que la ruta sea correcta) -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /*
+    =================================================================
+    --- ESTILOS GENERALES Y PARA LA PÁGINA "SOBRE MÍ" ---
+    =================================================================
+    */
+    body {
+        background-color: #1A1A1F; /* Fondo oscuro por defecto */
+        color: #ffffff; /* Texto claro por defecto */
+    }
+
+    /* Hero original de la página About Me */
+    main.cover {
+        background-color: #f0f0f0; /* Fondo gris claro para el hero */
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative; 
+    }
+    main.cover h1 {
+        color: #1A1A1F; /* Texto oscuro para el hero */
+    }
+
+    /* Contenedor del resto de la página */
+    #page-content {
+        background-color: #1A1A1F; /* Fondo oscuro */
+    }
+
+    #page-content .s1 h1, #page-content .s1 h2, #page-content .s1 p {
+        color: #ffffff;
+    }
+    #page-content .s1 h1 span {
+        color: #ffffff;
+    }
+    #page-content .s1 a {
+        border: 1px solid #ffffff;
+        color: #ffffff;
+    }
+    #page-content .s1 a:hover {
+        background-color: #ffffff;
+        color: #1A1A1F;
+    }
+
+    #page-content .topic-hijo {
+        color: #696969; 
+    }
+
+    .two-column {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 20px;
+    }
+    .two-column p {
+      flex: 1 1 45%;
+      min-width: 300px; /* Evita que el texto se comprima demasiado */
+      color: #bebebe;
+    }
+    
+    .image-yo{
+      padding: 80px 30px;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #1A1A1F;
+    }
+
+    .foto-yo {
+      /* Asegúrate de que la ruta a la imagen sea correcta */
+      background-image: url('img/foto-about-me.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 600px;
+      border-radius: 20px;
+      background-color: #e0e0e0; /* Color de fondo mientras carga la imagen */
+    }
+
+    /*
+    =================================================================
+    --- ESTILOS DE GRID PARA SECCIONES ---
+    =================================================================
+    */
+    .nueva-seccion {
+        width: 100%;
+        padding: 80px 30px; 
+        position: relative;
+    }
+    .seccion-grande-header {
+        text-align: center;
+    }
+    .seccion-grande-header .header-content {
+        margin-bottom: 80px;
+    }
+    .seccion-grande-header .header-content h2 {
+        font-size: 8vw;
+        line-height: 1.1;
+        font-family: "poppins-bold", Arial, Helvetica, sans-serif;
+        color: #ffffff;
+    }
+    .seccion-grande-header .header-content p {
+        color: #bebebe;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+    }
+    #metodologia .header-content p {
+        max-width: 950px;
+    }
+    .grid-layout {
+        display: grid;
+        grid-template-columns: 1fr; 
+        gap: 40px 60px; /* Espacio vertical y horizontal */
+        text-align: left;
+        margin-top: 40px;
+    }
+    .grid-item {
+        border-top: 1px solid #555559;
+        padding-top: 20px;
+    }
+    .grid-item-numero {
+        font-family: "poppins-light", Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        color: #bebebe;
+        display: block;
+        margin-bottom: 20px;
+    }
+    .grid-item h3 {
+        font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        color: #ffffff;
+        margin-bottom: 10px;
+    }
+    .grid-item p {
+        color: #bebebe !important;
+        font-size: 16px;
+        margin-bottom: 0;
+        line-height: 1.6;
+    }
+    
+    /*
+    =================================================================
+    --- ESTILOS PARA SECCIÓN DE CITA (BLOCKQUOTE) ---
+    =================================================================
+    */
+    .seccion-cita-destacada {
+        width: 100%;
+        padding: 80px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60vh;
+        background-color: #1A1A1F;
+        overflow: hidden;
+    }
+    .quote-wrapper {
+        position: relative;
+        text-align: center;
+        max-width: 900px;
+    }
+    .seccion-cita-destacada blockquote {
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-family: "poppins-bold", Arial, Helvetica, sans-serif;
+        font-weight: 900;
+        font-size: 8vw;
+        line-height: 1.2;
+        color: #ffffff;
+        font-style: normal;
+        text-transform: none;
+        position: relative;
+        z-index: 2;
+    }
+    .seccion-cita-destacada blockquote span {
+        display: inline-block;
+    }
+    .quote-mark {
+        position: absolute;
+        font-family: "poppins-bold", sans-serif;
+        font-size: 30vw;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.05);
+        z-index: 1;
+    }
+    .open-quote {
+        top: -10vw;
+        left: -8vw;
+    }
+    .close-quote {
+        bottom: -15vw;
+        right: -8vw;
+    }
+
+    /* --- ESTILOS PARA LA NUEVA SECCIÓN DE VIDEO --- */
+    .video-section-container {
+        position: relative;
+        width: 100%;
+        height: 70vh; /* Altura ajustable, 70% del alto de la ventana */
+        overflow: hidden;
+        background-color: #1A1A1F; /* Color de fondo por si el video no carga */
+    }
+    .video-section-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Esto asegura que no se distorsione */
+        transform: translate(-50%, -50%);
+        z-index: 1; /* Detrás del overlay */
+    }
+    .video-section-container .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.3); /* Capa oscura sutil para mejorar contraste */
+        z-index: 2; /* Sobre el video */
+    }
+
+    /*
+    =================================================================
+    --- ESTILOS PARA HEADER Y MENÚ INTERACTIVO ---
+    =================================================================
+    */
+    header {
+        width: 100%;
+        height: 100px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    header .logo img {
+        filter: invert(1);
+    }
+    header .btn-menu-mob {
+        color: #1A1A1F;
+    }
+    
+    #fullscreen-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(26, 26, 31, 0.98);
+        z-index: 1500;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+    }
+    #fullscreen-menu.open {
+        opacity: 1;
+        visibility: visible;
+    }
+    .menu-content-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+    }
+    .menu-logo img {
+        height: 40px;
+        width: auto;
+    }
+    #fullscreen-menu nav a {
+        font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        color: #ffffff;
+        text-decoration: none;
+        display: block;
+        padding: 10px 0;
+    }
+
+    .btn-menu-mob {
+        display: block !important;
+        position: relative; 
+        top: auto;
+        right: auto;
+        z-index: 2000;
+        background-color: transparent !important;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+    }
+    .close-menu-btn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 32px;
+        cursor: pointer;
+    }
+    body.menu-open {
+        overflow: hidden;
+    }
+
+    /*
+    =================================================================
+    --- ESTILOS PARA EL FOOTER ---
+    =================================================================
+    */
+    footer#contact {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        padding: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background-color: #1A1A1F;
+    }
+    footer#contact .topic-hijo {
+        color: #696969; 
+    }
+    .footer-content-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        z-index: 5;
+    }
+    .footer-content-wrapper > img {
+        margin-bottom: 60px;
+        width: 50%;
+        max-width: 300px;
+        height: auto;
+    }
+    .footer-primary-contact {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        gap: 20px;
+    }
+    /* --- INICIO: ESTILOS AÑADIDOS --- */
+    .footer-primary-contact a {
+        font-family: "poppins-medium", sans-serif;
+        font-size: 24px;
+        color: #ffffff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .footer-primary-contact a:hover {
+        color: #bebebe;
+    }
+    /* --- FIN: ESTILOS AÑADIDOS --- */
+    .footer-divider {
+        width: 100%;
+        height: 1px;
+        background-color: #555559;
+        margin-bottom: 40px;
+    }
+    .footer-secondary-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+    }
+    .footer-secondary-links a {
+        font-family: "poppins-light", sans-serif;
+        font-size: 16px;
+        color: #bebebe;
+        text-decoration: none;
+        position: relative;
+        transition: color 0.3s ease;
+    }
+    .footer-secondary-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 1px;
+        background: #ffffff;
+        bottom: -5px;
+        left: 0;
+        transition: width 0.4s ease;
+    }
+    .footer-secondary-links a:hover {
+        color: #ffffff;
+    }
+    .footer-secondary-links a:hover::after {
+        width: 100%;
+    }
+    footer#contact span#copyright-line {
+       padding-bottom: 15px;
+       margin-top: 60px;
+       position: relative;
+       width: 100%;
+       text-align: center;
+       color: #555559;
+    }
+
+    /*
+    =================================================================
+    --- ESTILOS RESPONSIVOS ---
+    =================================================================
+    */
+
+    /* TABLET Y SUPERIORES */
+    @media (min-width: 768px) {
+        .nueva-seccion {
+            padding: 150px 100px;
+        }
+        .seccion-grande-header .header-content h2 {
+            font-size: 6vw;
+        }
+        #formacion .grid-layout,
+        #metodologia .grid-layout,
+        #como-trabajo .grid-layout {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .footer-primary-contact {
+            flex-direction: row;
+            gap: 60px;
+        }
+        header {
+            padding: 0 60px;
+        }
+        .close-menu-btn {
+            right: 60px;
+        }
+        .image-yo {
+            padding: 120px 100px;
+        }
+    }
+
+    /* DESKTOP Y SUPERIORES */
+    @media (min-width: 1280px) {
+        .nueva-seccion {
+            padding: 220px 180px;
+        }
+        .seccion-cita-destacada blockquote {
+           font-size: 5vw;
+        }
+        .quote-mark { font-size: 20vw; }
+        .open-quote { top: -5vw; left: -5vw; }
+        .close-quote { bottom: -8vw; right: -5vw; }
+        
+        header {
+            padding: 0 100px;
+        }
+        .close-menu-btn {
+            right: 100px;
+        }
+    }
+
+    /* FULL HD Y SUPERIORES */
+    @media (min-width: 1920px) {
+        .nueva-seccion {
+            padding: 350px 250px;
+        }
+    }
+  </style>
+
+</head>
+<body>
+    <!-- ========= INICIO: NUEVO MENÚ DE PANTALLA COMPLETA ========= -->
+    <div id="fullscreen-menu">
+        <button class="close-menu-btn" id="closeMenuBtn">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        <div class="menu-content-wrapper">
+            <a href="index.html" class="menu-logo">
+                <img src="img/macu-logo-lightgrey-footer.png" alt="maculogo" />
+            </a>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="about-me.html">Sobre mi</a>
+                <a href="index.html#portfolio">Portafolio</a>
+                <a href="gallery.html">Galeria</a>
+                <a href="#contact">Contacto</a>
+               <!-- <a href="#">EN</a>-->
+            </nav>
+        </div>
+    </div>
+    <!-- ========= FIN: NUEVO MENÚ DE PANTALLA COMPLETA ========= -->
+
+    <!-- Marco -->
+    <div class="marco">
+      <!-- 
+      =================================================================
+      --- INICIO: SECCIÓN HEADER ---
+      =================================================================
+      -->
+      <header>
+        <a href="index.html" class="logo">
+          <!--  <img src="img/macu-logo2.png" alt="maculogo" />-->
+        </a>
+        <button class="btn-menu-mob" id="btnMobil">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </header>
+      <!-- 
+      =================================================================
+      --- FIN: SECCIÓN HEADER ---
+      =================================================================
+      -->
+
+      <!-- Main (Hero Blanco Original) -->
+      <main class="cover">
+        <article>
+          <div class="centrado">
+            <img src="img/macu-logo-big.png" alt="macubig" />
+          </div>
+        </article>
+      </main>
+      
+      <div id="page-content"> <!-- Contenedor para el resto del contenido de la página -->
+        <!-- Seccion 1 Sobre mi  -->
+        <section class="s1" id="me">
+          <div class="topic-padre"><h1 class="topic-hijo">sobre mí</h1></div>
+          <h1>
+            <span>M</span>oisés <span>A.</span> <span>C</span>armona
+            <span>U.</span>
+          </h1>
+          <p>
+            Hola! Soy una persona creativa, lógica y apasionada por transformar ideas en productos reales. Combino diseño industrial, UX/UI, branding, tecnología y AI para crear soluciones físicas y digitales que conectan con las personas.
+          </p>
+          <a href="docs/moisesc-carmona-2023-cv-es.pdf" target="_blank">Descargar CV</a>
+        </section>
+        <!-- fin section 1 -->
+
+        <section class="image-yo">
+          <div class="foto-yo"></div>
+        </section>
+
+        <!-- Seccion 4 Mi historia  -->
+        <section class="s1" id="mi-camino">
+          <div class="topic-padre"><h1 class="topic-hijo">mi camino</h1></div>
+          <h2>Mi camino como diseñador</h2>
+          <div class="two-column">
+            <p>Desde niño en Venezuela, la creatividad ha sido parte de mi vida. Dibujaba, inventaba juegos y creaba mundos con mi imaginación. En el liceo, me gustaban mucho las materias de Artística y Diseño Técnico. Con el tiempo, descubrí que también tenía una mente lógica, que me ayudaba a ver las cosas desde una perspectiva funcional.
+              Cuando conocí el diseño industrial, supe que era para mí. No era arquitectura ni diseño gráfico. Era crear productos desde cero, desde un dibujo hasta un prototipo tangible.
+            </p>
+            <p>
+            Esa pasión me llevó a trabajar en distintas áreas del diseño: gráfico, industrial y web. Hice un máster en diseño web en Madrid, y más adelante, trabajando en una empresa italiana, conocí el mundo del desarrollo de apps. Gracias a mi curiosidad, aprendí de forma autodidacta a diseñar productos digitales completos, colaborando con desarrolladores para convertir ideas en realidad.
+            Hoy me considero diseñador de productos, ya que gracias a mis experiencias puedo crear desde soluciones digitales hasta productos físicos que generan experiencias memorables. También me apasionan la tecnología, la inteligencia artificial y el crecimiento personal. Siempre busco cómo aportar valor real a través del diseño.</p>
+          </div>
+        </section>
+
+        <!-- ========= INICIO: NUEVA SECCIÓN DE VIDEO ========= -->
+        <section class="video-section-container">
+            <div class="overlay"></div>
+            <video src="video/sketching-cover.mp4" poster="video/video-clips-poster-24compressed.jpg" autoplay muted loop playsinline></video>
+        </section>
+        <!-- ========= FIN: NUEVA SECCIÓN DE VIDEO ========= -->
+
+        <!-- Seccion 3 Frase inspiradora  -->
+        <section class="seccion-cita-destacada" id="frase">
+             <div class="quote-wrapper">
+                <span class="quote-mark open-quote">“</span>
+                <blockquote>Todo lo que hoy existe, alguna vez fue solo una idea. Lo que imaginas, también puede hacerse realidad.</blockquote>
+                <span class="quote-mark close-quote">”</span>
+            </div>
+        </section>
+
+        <!-- Seccion Formación -->
+        <section class="nueva-seccion seccion-grande-header" id="formacion">
+            <div class="topic-padre"><h1 class="topic-hijo">formación</h1></div>
+            <div class="header-content">
+                <h2>Formación y especialización</h2>
+            </div>
+            <div class="grid-layout">
+            <div class="grid-item">
+                <span class="grid-item-numero">01</span>
+                <h3>Licenciatura en Diseño Industrial – Venezuela</h3>
+                <p>Formación académica completa en diseño de productos, desde la idea hasta el prototipo funcional. Graduado con distinción Magna Cum Laude.</p>
+            </div>
+    <div class="grid-item">
+        <span class="grid-item-numero">02</span>
+        <h3>Máster en Diseño Web – CEI Madrid</h3>
+        <p>Diseño y desarrollo de experiencias digitales modernas, con enfoque en UI, contenidos multimedia y front-end.</p>
+    </div>
+    <div class="grid-item">
+        <span class="grid-item-numero">03</span>
+        <h3>Certificación Profesional en UX Design – Google / Coursera</h3>
+        <p>Proceso completo de diseño UX: investigación, wireframes, prototipos en Figma y validación con usuarios.</p>
+    </div>
+    <div class="grid-item">
+        <span class="grid-item-numero">04</span>
+        <h3>Especialización en Diseño Paramétrico – Grasshopper 3D</h3>
+        <p>Modelado avanzado para diseño industrial usando flujos algorítmicos y generación de formas complejas en Rhino.</p>
+    </div>
+    <div class="grid-item">
+        <span class="grid-item-numero">05</span>
+        <h3>Formación en Inteligencia Artificial aplicada al diseño</h3>
+        <p>Cursos con IBM y Datahack sobre fundamentos de IA, Python y su aplicación práctica en proyectos creativos.</p>
+    </div>
+    <div class="grid-item">
+        <span class="grid-item-numero">06</span>
+        <h3>Gestión de proyectos de diseño – Certificación IBM</h3>
+        <p>Conocimientos formales en metodologías de gestión, desde la planificación hasta la entrega de proyectos multidisciplinarios.</p>
+    </div>
+            </div>
+        </section>
+
+
+        <!-- Seccion Metodología -->
+        <section class="nueva-seccion seccion-grande-header" id="metodologia">
+           <div class="topic-padre"><h1 class="topic-hijo">metodología</h1></div>
+            <div class="header-content">
+                <h2>Mi proceso incluye:</h2>
+                <p>Mi enfoque combina lo mejor del diseño industrial y digital. Uso una metodología inspirada en Design Thinking, adaptada a cada proyecto: algunos pasos aplican a ambos mundos, otros dependen si es un producto físico o una app. Siempre priorizo claridad, funcionalidad y belleza.</p>
+            </div>
+            <div class="grid-layout">
+                <div class="grid-item">
+                    <span class="grid-item-numero">01</span>
+                    <h3>Investigación</h3>
+                    <p>Comprender la idea, el problema y al usuario.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">02</span>
+                    <h3>Sketching y concepto</h3>
+                    <p>Explorar ideas visualmente.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">03</span>
+                    <h3>Wireframes o modelado 3D</h3>
+                    <p>Según sea digital o físico.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">04</span>
+                    <h3>Diseño visual y branding</h3>
+                    <p>Dar forma y personalidad al producto.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">05</span>
+                    <h3>Prototipado y validación</h3>
+                    <p>Probar y mejorar antes de construir.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">06</span>
+                    <h3>Entrega</h3>
+                    <p>Assets organizados para desarrolladores o fabricantes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seccion Cómo trabajo -->
+        <section class="nueva-seccion seccion-grande-header" id="como-trabajo">
+            <div class="topic-padre"><h1 class="topic-hijo">principios</h1></div>
+            <div class="header-content">
+                <h2>Cómo trabajo</h2>
+                <p>Estos son los principios que guían mi forma de colaborar y crear.</p>
+            </div>
+            <div class="grid-layout">
+                <div class="grid-item">
+                    <span class="grid-item-numero">01</span>
+                    <h3>Escucho antes de proponer</h3>
+                    <p>Para entender a fondo tus necesidades y objetivos.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">02</span>
+                    <h3>Combino creatividad con lógica</h3>
+                    <p>Uno la visión artística con un enfoque funcional y estratégico.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">03</span>
+                    <h3>Aporto ideas y también estructura</h3>
+                    <p>Doy forma a la creatividad con un plan claro y organizado.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">04</span>
+                    <h3>Me involucro en cada etapa</h3>
+                    <p>Acompaño el proyecto de principio a fin para garantizar la calidad.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">05</span>
+                    <h3>Trabajo como si tu idea fuera mía</h3>
+                    <p>Me comprometo con tu visión para lograr un resultado excepcional.</p>
+                </div>
+                <div class="grid-item">
+                    <span class="grid-item-numero">06</span>
+                    <h3>Comunicación constante</h3>
+                    <p>Mantengo un diálogo abierto para alinear la visión y expectativas.</p>
+                </div>
+            </div>
+        </section>
+      </div>
+      <!-- 
+      =================================================================
+      --- INICIO: SECCIÓN FOOTER ---
+      =================================================================
+      -->
+      <footer id="contact">
+          <div class="topic-padre"><h1 class="topic-hijo">contacto</h1></div>
+          <div class="footer-content-wrapper">
+              <img src="img/macu-logo-lightgrey-footer.png" alt="macu-logo-lightgrey-footer" />
+              <div class="footer-primary-contact">
+                  <a href="tel:+34624425822">+34 624 425 822</a>
+                  <a href="mailto:info@macudesigns.com">info@macudesigns.com</a>
+              </div>
+              <div class="footer-divider"></div>
+              <div class="footer-secondary-links">
+                  <a href="index.html">Inicio</a>
+                  <a href="about-me.html">Sobre mi</a>
+                  <a href="index.html#portfolio">Portafolio</a>
+                  <a href="gallery.html">Galeria</a>
+                  <a href="#contact">Contacto</a>
+                  <a href="https://www.linkedin.com/in/macudesigns/" target="_blank">LinkedIn</a>
+                  <a href="https://www.instagram.com/macudesigns_/" target="_blank">Instagram</a>
+                 <!--  <a href="#" target="_blank">EN</a>-->
+              </div>
+              <span id="copyright-line">MacuDesigns © <span id="copyright-year"></span> | Todos los derechos reservados | Moises A. Carmona U.</span>
+          </div>
+      </footer>
+      <!-- 
+      =================================================================
+      --- FIN: SECCIÓN FOOTER ---
+      =================================================================
+      -->
+    </div>
+    <!-- fin marco -->
+
+    <!-- JS Librerias -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    
+    <script>
+    // --- SCRIPT PARA EL NUEVO MENÚ (SIN JQUERY) ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.getElementById('btnMobil');
+        const closeMenuButton = document.getElementById('closeMenuBtn');
+        const menuOverlay = document.getElementById('fullscreen-menu');
+        const body = document.body;
+
+        if (menuButton && menuOverlay && closeMenuButton) {
+            const toggleMenu = () => {
+                body.classList.toggle('menu-open');
+                menuOverlay.classList.toggle('open');
+            };
+
+            menuButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleMenu();
+            });
+
+            closeMenuButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleMenu();
+            });
+
+            menuOverlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (menuOverlay.classList.contains('open')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === "Escape" && menuOverlay.classList.contains('open')) {
+                    toggleMenu();
+                }
+            });
+        }
+        
+        // --- SCRIPT PARA ACTUALIZAR AÑO DEL COPYRIGHT ---
+        const yearSpan = document.getElementById("copyright-year");
+        if(yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+        }
+
+        // --- ANIMACIONES CON SCROLL (GSAP) ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        const animationDefaults = {
+            duration: 1,
+            autoAlpha: 0,
+            y: 50,
+            ease: 'power3.out',
+        };
+
+        // --- ANIMACIÓN BLOCKQUOTE ---
+        const quote = document.querySelector("#frase blockquote");
+        if (quote) {
+            const text = quote.textContent;
+            const words = text.split(" ");
+            quote.innerHTML = ""; // Limpiar texto original
+            words.forEach(word => {
+                const span = document.createElement("span");
+                span.textContent = word;
+                quote.appendChild(span);
+                quote.appendChild(document.createTextNode(" "));
+            });
+
+            const quoteTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#frase",
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            quoteTl.from("#frase .quote-mark", {
+                duration: 1.5,
+                autoAlpha: 0,
+                scale: 0.2,
+                ease: "power3.out"
+            })
+            .from(quote.querySelectorAll("span"), {
+                ...animationDefaults,
+                stagger: 0.1
+            }, "-=1.2");
+        }
+
+
+        // Animar todas las secciones con la clase .s1
+        gsap.utils.toArray('#page-content .s1').forEach(section => {
+            gsap.from(section.querySelectorAll("h1, h2, p, a"), {
+                ...animationDefaults,
+                stagger: 0.15,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+        
+        // Animar las nuevas secciones de grid
+        gsap.utils.toArray('.seccion-grande-header').forEach(section => {
+             gsap.from(section.querySelectorAll("h2, p, .grid-item"), {
+                ...animationDefaults,
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+
+    });
+    </script>
+</body>
+</html>

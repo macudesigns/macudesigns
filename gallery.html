@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <title>MacuDesigns - Galería</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="img/macu-favicon.png" />
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- CSS Propio -->
+    <link rel="stylesheet" href="css/style.css" />
+
+<style>
+  /*
+  =================================================================
+  --- ESTILOS PARA LA GALERÍA ---
+  =================================================================
+  */
+  .gallery-section{
+    padding: 150px;
+    position: relative; /* Necesario para el título vertical */
+  }
+
+  .grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-gap: 10px;
+    grid-auto-rows: minmax(180px, auto);
+    grid-auto-flow: dense;
+  }
+
+  .grid-item {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000;
+    background-color: #ccc;
+    border-radius: 30px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.4s, transform 0.4s, box-shadow 0.4s;
+  }
+
+  .grid-item:hover {
+    transform: scale(1.04) !important;
+    z-index: 2;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    cursor: pointer;
+    transition: transform 0.5s ;
+  }
+
+  .grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+    display: block;
+  }
+
+  .grid-item.animate-in {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .span-2 {
+    grid-column-end: span 2;
+    grid-row-end: span 2;
+  }
+
+  .span-3 {
+    grid-column-end: span 3;
+    grid-row-end: span 4;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .gallery-section {
+      padding: 80px;
+    }
+    .grid-layout {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-gap: 8px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .gallery-section {
+      padding: 50px;
+    }
+    .grid-layout {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      grid-gap: 5px;
+    }
+    .span-2, .span-3 {
+      grid-column-end: span 2;
+      grid-row-end: span 2;
+    }
+  }
+
+  /*
+  =================================================================
+  --- ESTILOS GLOBALES Y COMPONENTES REUTILIZABLES ---
+  =================================================================
+  */
+
+  .cover h1 {
+      font-family: "poppins-light";
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      text-align: center;
+      line-height: 1.3;
+      max-width: 600px;
+      margin: 0 auto;
+  }
+  .cover .centrado {
+      text-align: center;
+  }
+  .cover .centrado img {
+      margin-bottom: 20px;
+  }
+
+  /*
+  =================================================================
+  --- ESTILOS PARA LA SECCIÓN HERO (COVER) ---
+  =================================================================
+  */
+  .cover {
+      background-image: none;
+      filter: none;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+  }
+  .cover-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+  }
+  .cover-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+  }
+  .cover article {
+      position: relative;
+      z-index: 3;
+  }
+
+  /*
+  =================================================================
+  --- ESTILOS PARA EL FOOTER ---
+  =================================================================
+  */
+  #main-content {
+      position: relative;
+      z-index: 2;
+      background-color: #1A1A1F;
+  }
+  footer#contact {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+  }
+  .footer-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 5;
+  }
+  .footer-content-wrapper > img {
+      margin-bottom: 60px;
+      width: 50%;
+      max-width: 300px;
+      height: auto;
+  }
+  .footer-primary-contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      gap: 20px;
+  }
+  @media (min-width: 768px) {
+      .footer-primary-contact {
+          flex-direction: row;
+          gap: 60px;
+      }
+  }
+  .footer-primary-contact a {
+      font-family: "poppins-medium", sans-serif;
+      font-size: 24px;
+      color: #ffffff;
+      text-decoration: none;
+  }
+  .footer-divider {
+      width: 100%;
+      height: 1px;
+      background-color: #555559;
+      margin-bottom: 40px;
+  }
+  .footer-secondary-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+  }
+  .footer-secondary-links a {
+      font-family: "poppins-light", sans-serif;
+      font-size: 16px;
+      color: #bebebe;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+  }
+  .footer-secondary-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      background: #ffffff;
+      bottom: -5px;
+      left: 0;
+      transition: width 0.4s ease;
+  }
+  .footer-secondary-links a:hover {
+      color: #ffffff;
+  }
+  .footer-secondary-links a:hover::after {
+      width: 100%;
+  }
+  
+  footer#contact span#copyright-line {
+       padding-bottom: 15px;
+       margin-top: 60px;
+       position: relative;
+       width: 100%;
+       text-align: center;
+  }
+
+  /*
+  =================================================================
+  --- ESTILOS PARA HEADER Y MENÚ INTERACTIVO ---
+  =================================================================
+  */
+  header {
+      width: 100%;
+      height: 100px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+  
+  header .logo {
+      max-width: 171px;
+      width: 30%;
+  }
+  header .logo img {
+      width: 100%;
+      height: auto;
+  }
+
+  @media (min-width: 768px) {
+      header {
+          padding: 0 60px;
+      }
+  }
+  @media (min-width: 1280px) {
+      header {
+          padding: 0 100px;
+      }
+  }
+  
+  #fullscreen-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(26, 26, 31, 0.98);
+      z-index: 1500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+  }
+  #fullscreen-menu.open {
+      opacity: 1;
+      visibility: visible;
+  }
+  .menu-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+  }
+  .menu-logo {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .menu-logo img {
+      height: 40px;
+      width: auto;
+  }
+  #fullscreen-menu.open .menu-logo {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.15s;
+  }
+  #fullscreen-menu nav {
+      text-align: center;
+  }
+  #fullscreen-menu nav a {
+      font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: #ffffff;
+      text-decoration: none;
+      display: block;
+      padding: 10px 0;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  #fullscreen-menu nav a:hover {
+      color: #BEBEC1;
+  }
+  #fullscreen-menu.open nav a {
+      opacity: 1;
+      transform: translateY(0);
+  }
+  #fullscreen-menu.open nav a:nth-child(1) { transition-delay: 0.2s; }
+  #fullscreen-menu.open nav a:nth-child(2) { transition-delay: 0.25s; }
+  #fullscreen-menu.open nav a:nth-child(3) { transition-delay: 0.3s; }
+  #fullscreen-menu.open nav a:nth-child(4) { transition-delay: 0.35s; }
+  #fullscreen-menu.open nav a:nth-child(5) { transition-delay: 0.4s; }
+
+  .btn-menu-mob {
+      display: block !important;
+      position: relative; 
+      top: auto;
+      right: auto;
+      z-index: 2000;
+      background-color: transparent !important;
+      border: none;
+      color: #ffffff;
+      font-size: 28px;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+  }
+  .btn-menu-mob:hover {
+      transform: scale(1.1);
+  }
+  .close-menu-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 32px;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+  }
+  @media (min-width: 768px) {
+      .close-menu-btn {
+          right: 60px;
+      }
+  }
+  @media (min-width: 1280px) {
+      .close-menu-btn {
+          right: 100px;
+      }
+  }
+  .close-menu-btn:hover {
+      transform: scale(1.1);
+      color: #BEBEC1;
+  }
+  #fullscreen-menu.open .close-menu-btn {
+      opacity: 1;
+      transition: opacity 0.3s ease 0.2s;
+  }
+  body.menu-open {
+      overflow: hidden;
+  }
+</style>
+</head>
+
+<body>
+    <!-- ========= INICIO: NUEVO MENÚ DE PANTALLA COMPLETA ========= -->
+    <div id="fullscreen-menu">
+        <button class="close-menu-btn" id="closeMenuBtn">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        <div class="menu-content-wrapper">
+            <a href="index.html" class="menu-logo">
+                <img src="img/macu-logo-lightgrey-footer.png" alt="maculogo" />
+            </a>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="about-me.html">Sobre mi</a>
+                <a href="index.html#portfolio">Portafolio</a>
+                <a href="gallery.html">Galeria</a>
+                <a href="#contact">Contacto</a>
+                <!-- <a href="#">EN</a>-->
+            </nav>
+        </div>
+    </div>
+    <!-- ========= FIN: NUEVO MENÚ DE PANTALLA COMPLETA ========= -->
+
+    <!-- Marco -->
+    <div class="marco">
+      <div id="main-content">
+        <!-- 
+        =================================================================
+        --- INICIO: SECCIÓN HEADER ---
+        =================================================================
+        -->
+        <header>
+            <a href="index.html" class="logo">
+                <img src="img/logo-macu-white@2x.png" alt="maculogo" />
+            </a>
+            <button class="btn-menu-mob" id="btnMobil">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </header>
+        <!-- 
+        =================================================================
+        --- FIN: SECCIÓN HEADER ---
+        =================================================================
+        -->
+
+        <!-- 
+        =================================================================
+        --- INICIO: SECCIÓN HERO (COVER) ---
+        =================================================================
+        -->
+          <main class="cover">
+            <div class="cover-overlay"></div>
+            <video class="cover-video" poster="video/video-clips-poster-23compressed.jpg" autoplay muted loop playsinline>
+                <source src="video/hero.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+            <article>
+                <div class="centrado">
+                    <img src="img/macu-logo-white.svg" alt="macubig" />
+                    <h1 style="color: #ffffff;">designs</h1>
+                </div>
+            </article>
+        </main>
+        <!-- 
+        =================================================================
+        --- FIN: SECCIÓN HERO (COVER) ---
+        =================================================================
+        -->
+
+        <!-- Seccion de Galería -->
+        <section class="gallery-section" id="gallery">
+          <div class="topic-padre"><h1 class="topic-hijo">gallery</h1></div>
+          <div class="grid-layout">
+              <div class="grid-item grid-item-1" data-img="img/gallery/adn-shoe-addidas.jpg">
+                <img src="img/gallery/adn-shoe-addidas.jpg" alt="Descripción de la imagen 1">
+              </div>
+              <div class="grid-item grid-item-2" data-img="img/gallery/andes-licor-de-mora.png">
+                <img src="img/gallery/andes-licor-de-mora.png" alt="Descripción de la imagen 2">
+              </div>
+              <div class="grid-item span-3 grid-item-3" data-img="img/gallery/drone-nissep-1.jpg">
+                <img src="img/gallery/drone-nissep-1.jpg" alt="Descripción de la imagen 3">
+              </div>
+              <div class="grid-item grid-item-4" data-img="img/gallery/hand-bag-macu.png">
+                <img src="img/gallery/hand-bag-macu.png" alt="Descripción de la imagen 4">
+              </div>
+              <div class="grid-item span-2 grid-item-5" data-img="img/gallery/game-pad-1.jpg">
+                <img src="img/gallery/game-pad-1.jpg" alt="Descripción de la imagen 5">
+              </div>
+              <div class="grid-item grid-item-6" data-img="img/gallery/macu-bag-hand.png">
+                <img src="img/gallery/macu-bag-hand.png" alt="Descripción de la imagen 6">
+              </div>
+              <div class="grid-item grid-item-7" data-img="img/gallery/asientos.jpg">
+                <img src="img/gallery/asientos.jpg" alt="Descripción de la imagen 7">
+              </div>
+              <div class="grid-item grid-item-8" data-img="img/gallery/inka-casco.png">
+                <img src="img/gallery/inka-casco.png" alt="Descripción de la imagen 8">
+              </div>
+              <div class="grid-item grid-item-9" data-img="img/gallery/logoanimation.gif">
+                <img src="img/gallery/logoanimation.gif" alt="Descripción de la imagen 9">
+              </div>
+              <div class="grid-item span-2 grid-item-10" data-img="img/gallery/sega-controll-concept.png">
+                <img src="img/gallery/sega-controll-concept.png" alt="Descripción de la imagen 10">
+              </div>
+              <div class="grid-item grid-item-11" data-img="img/gallery/navia-logo-animation.gif">
+                <img src="img/gallery/navia-logo-animation.gif" alt="Descripción de la imagen 11">
+              </div>
+              <div class="grid-item grid-item-12" data-img="img/gallery/zapato.jpg">
+                <img src="img/gallery/zapato.jpg" alt="Descripción de la imagen 12">
+              </div>
+              <div class="grid-item span-2 grid-item-13" data-img="img/gallery/navia-landing-page-1.jpg">
+                <img src="img/gallery/navia-landing-page-1.jpg" alt="Descripción de la imagen 13">
+              </div>
+              <div class="grid-item grid-item-14" data-img="img/gallery/karyni-logo-1.jpg">
+                <img src="img/gallery/karyni-logo-1.jpg" alt="Descripción de la imagen 14">
+              </div>
+              <div class="grid-item grid-item-15" data-img="img/gallery/car-key.jpg">
+                <img src="img/gallery/car-key.jpg" alt="Descripción de la imagen 15">
+              </div>
+              <div class="grid-item grid-item-16" data-img="img/gallery/froko-bag.jpg">
+                <img src="img/gallery/froko-bag.jpg" alt="Descripción de la imagen 16">
+              </div>
+              <div class="grid-item span-3 grid-item-17" data-img="img/gallery/sobreruedas uniforme.png">
+                <img src="img/gallery/sobreruedas uniforme.png" alt="Descripción de la imagen 17">
+              </div>
+              <div class="grid-item grid-item-18" data-img="img/gallery/logo-intelener.jpg">
+                <img src="img/gallery/logo-intelener.jpg" alt="Descripción de la imagen 18">
+              </div>
+              <div class="grid-item grid-item-19" data-img="img/gallery//macu-case-kindle.gif">
+                <img src="img/gallery//macu-case-kindle.gif" alt="Descripción de la imagen 19">
+              </div>
+              <div class="grid-item grid-item-20" data-img="img/gallery/kindle-case.jpg">
+                <img src="img/gallery/kindle-case.jpg" alt="Descripción de la imagen 20">
+              </div>
+              <div class="grid-item span-2 grid-item-21" data-img="img/gallery/navia-app-2.jpg">
+                <img src="img/gallery/navia-app-2.jpg" alt="Descripción de la imagen 21">
+              </div>
+              <div class="grid-item grid-item-22" data-img="img/gallery/mafena-2.png">
+                <img src="img/gallery/mafena-2.png" alt="Descripción de la imagen 22">
+              </div>
+              <div class="grid-item grid-item-23" data-img="img/gallery/nissep-logo-drone.jpg">
+                <img src="img/gallery/nissep-logo-drone.jpg" alt="Descripción de la imagen 23">
+              </div>
+              <div class="grid-item grid-item-24" data-img="img/gallery/wine-label-2.jpg">
+                <img src="img/gallery/wine-label-2.jpg" alt="Descripción de la imagen 24">
+              </div>
+              <div class="grid-item grid-item-25" data-img="img/gallery/Ecologger-Presentation.png">
+                <img src="img/gallery/Ecologger-Presentation.png" alt="Descripción de la imagen 25">
+              </div>
+              <div class="grid-item span-3 grid-item-26" data-img="img/gallery/FORERUNNER_5.jpg">
+                <img src="img/gallery/FORERUNNER_5.jpg" alt="Descripción de la imagen 26">
+              </div>
+              <div class="grid-item grid-item-27" data-img="img/gallery/apollo-running.jpg">
+                <img src="img/gallery/apollo-running.jpg" alt="Descripción de la imagen 27">
+              </div>
+              <div class="grid-item grid-item-28" data-img="img/gallery/trakkem-pro-temtag.png">
+                <img src="img/gallery/trakkem-pro-temtag.png" alt="Descripción de la imagen 28">
+              </div>
+              <div class="grid-item grid-item-29" data-img="img/gallery/trakkem-pro-app.png">
+                <img src="img/gallery/trakkem-pro-app.png" alt="Descripción de la imagen 29">
+              </div>
+              <div class="grid-item grid-item-30" data-img="img/gallery/dec-security-first-logo.jpg">
+                <img src="img/gallery/dec-security-first-logo.jpg" alt="Descripción de la imagen 30">
+              </div>
+              <div class="grid-item grid-item-31" data-img="img/gallery/camera-concept.jpg">
+                <img src="img/gallery/camera-concept.jpg" alt="Descripción de la imagen 31">
+              </div>
+              <div class="grid-item grid-item-32" data-img="img/gallery/majordomo.jpg">
+                <img src="img/gallery/majordomo.jpg" alt="Descripción de la imagen 32">
+              </div>
+              <div class="grid-item grid-item-33" data-img="img/gallery/5-TRAIN.jpg">
+                <img src="img/gallery/5-TRAIN.jpg" alt="Descripción de la imagen 33">
+              </div>
+              <div class="grid-item grid-item-33" data-img="img/gallery/small-trackers.png">
+                <img src="img/gallery/small-trackers.png" alt="Descripción de la imagen 33">
+              </div>
+              <div class="grid-item grid-item-33" data-img="">
+                <img src="img/gallery/Via-lactea-branding-guidelines.jpg" alt="Descripción de la imagen 33">
+              </div>
+              <div class="grid-item grid-item-33" data-img="img/gallery/intelener-web.jpg">
+                <img src="img/gallery/intelener-web.jpg" alt="Descripción de la imagen 33">
+              </div>
+              <div class="grid-item grid-item-33" data-img="img/gallery/100-anos-madrid.jpg">
+                <img src="img/gallery/100-anos-madrid.jpg" alt="Descripción de la imagen 33">
+              </div>
+              <div class="grid-item grid-item-33" data-img="img/gallery/nuc-render-concept-dec.jpg">
+                <img src="img/gallery/nuc-render-concept-dec.jpg" alt="Descripción de la imagen 33">
+              </div>
+              <div class="grid-item grid-item-33" data-img="img/gallery/evee-trakkem.png">
+                <img src="img/gallery/evee-trakkem.png" alt="Descripción de la imagen 33">
+              </div>
+              <div class="grid-item grid-item-33" data-img="img/gallery/navia-assembling.jpg">
+                <img src="img/gallery/navia-assembling.jpg" alt="Descripción de la imagen 33">
+              </div>
+          </div>
+          <!-- Lightbox markup -->
+          <div id="lightbox-overlay" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;">
+            <img id="lightbox-img" src="" alt="" style="max-width:90vw;max-height:90vh;border-radius:20px;box-shadow:0 0 40px #000;">
+            <span id="lightbox-close" style="position:absolute;top:30px;right:40px;font-size:3rem;color:#fff;cursor:pointer;font-family:sans-serif;">&times;</span>
+          </div>
+        </section>
+      </div> <!-- Fin de #main-content -->
+      <!-- 
+      =================================================================
+      --- INICIO: SECCIÓN FOOTER ---
+      =================================================================
+      -->
+      <footer id="contact">
+          <div class="topic-padre"><h1 class="topic-hijo">contacto</h1></div>
+          <div class="footer-content-wrapper">
+              <img src="img/macu-logo-lightgrey-footer.png" alt="macu-logo-lightgrey-footer" />
+              <div class="footer-primary-contact">
+                  <a href="tel:+34624425822">+34 624 425 822</a>
+                  <a href="mailto:info@macudesigns.com">info@macudesigns.com</a>
+              </div>
+              <div class="footer-divider"></div>
+              <div class="footer-secondary-links">
+                  <a href="index.html">Inicio</a>
+                  <a href="about-me.html">Sobre mi</a>
+                  <a href="index.html#portfolio">Portafolio</a>
+                  <a href="gallery.html">Galeria</a>
+                  <a href="#contact">Contacto</a>
+                  <a href="https://www.linkedin.com/in/macudesigns/" target="_blank">LinkedIn</a>
+                  <a href="https://www.instagram.com/macudesigns_/" target="_blank">Instagram</a>
+                 <!--  <a href="#" target="_blank">EN</a>-->
+              </div>
+              <span id="copyright-line">MacuDesigns © <span id="copyright-year"></span> | Todos los derechos reservados | Moises A. Carmona U.</span>
+          </div>
+      </footer>
+      <!-- 
+      =================================================================
+      --- FIN: SECCIÓN FOOTER ---
+      =================================================================
+      -->
+    </div>
+    <!-- fin marco -->
+
+    <!-- JS Propio -->
+    <script>
+      // --- SCRIPT PARA EL NUEVO MENÚ (SIN JQUERY) ---
+      document.addEventListener('DOMContentLoaded', function() {
+          const menuButton = document.getElementById('btnMobil');
+          const closeMenuButton = document.getElementById('closeMenuBtn');
+          const menuOverlay = document.getElementById('fullscreen-menu');
+          const menuIcon = menuButton.querySelector('i');
+          const body = document.body;
+
+          if (menuButton && menuOverlay && menuIcon && closeMenuButton) {
+              const toggleMenu = () => {
+                  body.classList.toggle('menu-open');
+                  menuOverlay.classList.toggle('open');
+              };
+
+              menuButton.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  toggleMenu();
+              });
+
+              closeMenuButton.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  toggleMenu();
+              });
+
+              menuOverlay.querySelectorAll('a').forEach(link => {
+                  link.addEventListener('click', () => {
+                      if (menuOverlay.classList.contains('open')) {
+                          toggleMenu();
+                      }
+                  });
+              });
+
+              document.addEventListener('keydown', function(e) {
+                  if (e.key === "Escape" && menuOverlay.classList.contains('open')) {
+                      toggleMenu();
+                  }
+              });
+          }
+          
+          // --- SCRIPT PARA LA GALERÍA ---
+          const gridItems = document.querySelectorAll(".grid-item");
+          const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry, index) => {
+              if (entry.isIntersecting) {
+                setTimeout(() => {
+                  entry.target.classList.add("animate-in");
+                }, index * 100);
+                observer.unobserve(entry.target);
+              }
+            });
+          }, {
+            threshold: 0.1
+          });
+
+          gridItems.forEach((item) => {
+            observer.observe(item);
+          });
+
+          const lightbox = document.getElementById('lightbox-overlay');
+          const lightboxImg = document.getElementById('lightbox-img');
+          const lightboxClose = document.getElementById('lightbox-close');
+
+          gridItems.forEach(item => {
+            item.addEventListener('click', function() {
+              const imgSrc = this.getAttribute('data-img');
+              if (imgSrc) {
+                lightboxImg.src = imgSrc;
+                lightbox.style.display = 'flex';
+              }
+            });
+          });
+
+          lightboxClose.addEventListener('click', function() {
+            lightbox.style.display = 'none';
+            lightboxImg.src = '';
+          });
+
+          lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+              lightbox.style.display = 'none';
+              lightboxImg.src = '';
+            }
+          });
+
+          // --- SCRIPT PARA ACTUALIZAR AÑO DEL COPYRIGHT ---
+          const yearSpan = document.getElementById("copyright-year");
+          if(yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+          }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>S&P – Società di Consulenza Finanziaria | MacuDesigns</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="img/macu-favicon.png" />
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- CSS flickty -->
+    <link rel="stylesheet" href="css/flickity.css" />
+    <!-- CSS Propio -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+        /*
+        =================================================================
+        --- ESTILOS ADAPTADOS DE INDEX.HTML ---
+        =================================================================
+        */
+        body {
+            background-color: #1A1A1F;
+        }
+
+        /* Contenedor principal con ancho máximo */
+        .marco {
+            width: 100%;
+            max-width: 1920px;
+            margin: 0 auto;
+            position: relative;
+            overflow-x: hidden; /* Evita el desbordamiento horizontal */
+        }
+        
+        #main-content {
+            position: relative;
+            z-index: 2;
+            background-color: #1A1A1F;
+        }
+
+        /* Clase base para las nuevas secciones */
+        .nueva-seccion {
+            width: 100%;
+            padding: 80px 30px;
+            position: relative;
+            overflow: hidden;
+            background-color: #1A1A1F; /* Añadido para consistencia */
+        }
+        
+        .nueva-seccion h1, .nueva-seccion h2 {
+            font-family: "poppins-bold", Arial, Helvetica, sans-serif;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .nueva-seccion p, .nueva-seccion ul {
+            margin-bottom: 20px;
+            color: #bebebe;
+        }
+        
+        .nueva-seccion ul {
+            list-style-position: inside;
+            padding-left: 10px;
+        }
+
+        .nueva-seccion ul li {
+            margin-bottom: 8px;
+        }
+
+
+        /* Botón CTA */
+        .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            border: 1px solid #ffffff;
+            padding: 15px 30px;
+            color: #ffffff;
+            font-size: 18px;
+            border-radius: 15px;
+            transition: 0.3s ease-in-out;
+            background-color: transparent;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #ffffff;
+            color: #1A1A1F;
+            transform: scale(1.05);
+        }
+        
+        /*
+        =================================================================
+        --- ESTILOS PARA LA SECCIÓN HERO (COVER) ---
+        =================================================================
+        */
+        .cover {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .cover-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        .cover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+        .cover article {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+        }
+        .cover article img {
+            max-width: 180px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .cover h1 {
+            font-family: "poppins-light", Arial, Helvetica, sans-serif;
+            font-size: clamp(2.2rem, 7vw, 4.5rem);
+            color: #ffffff;
+            line-height: 1.2;
+        }
+        .cover p.subtitle {
+             font-family: "poppins-light";
+             font-size: clamp(1rem, 4vw, 1.25rem);
+             color: #bebebe;
+             margin-top: 15px;
+        }
+
+        /*
+        =================================================================
+        --- ESTILOS PARA HEADER Y MENÚ INTERACTIVO ---
+        =================================================================
+        */
+        header {
+            width: 100%;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        header .logo {
+            max-width: 150px;
+            width: 40%;
+        }
+        header .logo img {
+            width: 100%;
+            height: auto;
+        }
+        
+        #fullscreen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(26, 26, 31, 0.98);
+            z-index: 1500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+        }
+        #fullscreen-menu.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .menu-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+        .menu-logo img {
+            height: 40px;
+            width: auto;
+        }
+        #fullscreen-menu nav a {
+            font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        #fullscreen-menu.open nav a {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #fullscreen-menu.open nav a:nth-child(1) { transition-delay: 0.2s; }
+        #fullscreen-menu.open nav a:nth-child(2) { transition-delay: 0.25s; }
+        #fullscreen-menu.open nav a:nth-child(3) { transition-delay: 0.3s; }
+        #fullscreen-menu.open nav a:nth-child(4) { transition-delay: 0.35s; }
+        #fullscreen-menu.open nav a:nth-child(5) { transition-delay: 0.4s; }
+
+        .btn-menu-mob {
+            display: block !important;
+            position: relative; 
+            top: auto;
+            right: auto;
+            z-index: 2000;
+            background-color: transparent !important;
+            border: none;
+            color: #ffffff;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .close-menu-btn {
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 32px;
+            cursor: pointer;
+            opacity: 0;
+        }
+        #fullscreen-menu.open .close-menu-btn {
+            opacity: 1;
+            transition: opacity 0.3s ease 0.2s;
+        }
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        /*
+        =================================================================
+        --- ESTILOS PARA SECCIONES DE PROYECTO ---
+        =================================================================
+        */
+        .fullwidth-image {
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #333333;
+        }
+        
+        .project-details {
+            padding-top: 0;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            text-align: left;
+        }
+        .grid-item {
+            border-top: 1px solid #555559;
+            padding-top: 20px;
+        }
+        .grid-item-numero {
+            font-family: "poppins-light", Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            color: #bebebe;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .grid-item h3 {
+            font-family: "poppins-medium", Arial, Helvetica, sans-serif;
+            font-size: 22px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .grid-item p, .grid-item ul {
+            color: #bebebe;
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .gallery-grid .grid-item {
+            overflow: hidden;
+            border-radius: 12px;
+            background-color: #444444;
+            border-top: none;
+            padding-top: 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery-grid .grid-item:hover {
+            transform: scale(1.03);
+        }
+        .gallery-grid .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /*
+        =================================================================
+        --- ESTILOS PARA FOOTER ---
+        =================================================================
+        */
+        footer#contact {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .footer-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+        .footer-content-wrapper > img {
+            margin-bottom: 60px;
+            width: 50%;
+            max-width: 300px;
+            height: auto;
+        }
+        .footer-primary-contact {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        .footer-primary-contact a {
+            font-family: "poppins-medium", sans-serif;
+            font-size: 24px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background-color: #555559;
+            margin-bottom: 40px;
+        }
+        .footer-secondary-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 30px;
+        }
+        .footer-secondary-links a {
+            font-family: "poppins-light", sans-serif;
+            font-size: 16px;
+            color: #bebebe;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .footer-secondary-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            background: #ffffff;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.4s ease;
+        }
+        .footer-secondary-links a:hover {
+            color: #ffffff;
+        }
+        .footer-secondary-links a:hover::after {
+            width: 100%;
+        }
+        footer#contact span#copyright-line {
+             padding-bottom: 15px;
+             margin-top: 60px;
+             position: relative;
+             width: 100%;
+             text-align: center;
+             color: #555559;
+        }
+        /* Esto asegura que el texto vertical del footer se muestre */
+        footer#contact .topic-padre {
+            position: absolute;
+            height: 100%;
+            width: 18%;
+            margin: auto;
+            top: 0px;
+            bottom: 0px;
+            right: 0px;
+            overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        footer#contact .topic-hijo {
+            font-family: "poppins-thin";
+            line-height: 0.7;
+            font-size: 60px !important;
+            z-index: 10;
+            text-align: center;
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            color: #696969 !important;
+        }
+
+
+        /* --- ESTILOS CARRUSEL HORIZONTAL --- */
+        .horizontal-scroll-section {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* La altura es la del viewport */
+            overflow: hidden;
+        }
+        .sticky-carousel-wrapper {
+            display: flex;
+            height: 100%;
+            width: 400%; /* 100% por cada imagen */
+            will-change: transform;
+        }
+        .carousel-panel {
+            width: 100vw;
+            height: 100vh;
+        }
+        .carousel-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /*
+        =================================================================
+        --- ESTILOS RESPONSIVOS ---
+        =================================================================
+        */
+        @media (min-width: 768px) {
+            .nueva-seccion {
+                padding: 120px 100px;
+            }
+            .project-details {
+                padding-top: 0;
+            }
+            .grid-layout {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 60px;
+            }
+            .footer-primary-contact {
+                flex-direction: row;
+                gap: 60px;
+            }
+            header { padding: 0 60px; }
+            .close-menu-btn { right: 60px; }
+            footer#contact .topic-hijo {
+                font-size: 125px !important;
+            }
+            .cta-button {
+                font-size: 20px;
+            }
+            .cover article img {
+                max-width: 220px;
+            }
+        }
+        @media (min-width: 1280px) {
+            .nueva-seccion {
+                padding: 150px 180px;
+            }
+            .project-details {
+                padding-top: 0;
+            }
+            header { padding: 0 100px; }
+            .close-menu-btn { right: 100px; }
+            footer#contact .topic-hijo {
+                font-size: 140px !important;
+            }
+        }
+        @media (min-width: 1920px) {
+            .nueva-seccion {
+                padding: 180px 250px;
+            }
+            .project-details {
+                padding-top: 0;
+            }
+            footer#contact .topic-hijo {
+                font-size: 180px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========= INICIO: NUEVO MENÚ DE PANTALLA COMPLETA ========= -->
+    <div id="fullscreen-menu">
+        <button class="close-menu-btn" id="closeMenuBtn">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        <div class="menu-content-wrapper">
+            <a href="index.html" class="menu-logo">
+                <img src="img/macu-logo-lightgrey-footer.png" alt="maculogo" />
+            </a>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="about-me.html">Sobre mi</a>
+                <a href="index.html#portfolio">Portafolio</a>
+                <a href="gallery.html">Galeria</a>
+                <a href="#contact">Contacto</a>
+                <!-- <a href="#">EN</a>-->
+            </nav>
+        </div>
+    </div>
+    <!-- ========= FIN: NUEVO MENÚ DE PANTALLA COMPLETA ========= -->
+
+    <div class="marco">
+        <div id="main-content">
+            <!-- 
+            =================================================================
+            --- INICIO: SECCIÓN HEADER ---
+            =================================================================
+            -->
+            <header>
+                <a href="index.html" class="logo">
+                    <img src="img/logo-macu-white@2x.png" alt="maculogo" />
+                </a>
+                <button class="btn-menu-mob" id="btnMobil">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+            <!-- 
+            =================================================================
+            --- FIN: SECCIÓN HEADER ---
+            =================================================================
+            -->
+
+            <!-- 
+            =================================================================
+            --- INICIO: SECCIÓN HERO (COVER) ---
+            =================================================================
+            -->
+            <main class="cover">
+                <div class="cover-overlay"></div>
+                <video class="cover-video" poster="portfolio/sp/video-clips-poster-06compressed.jpg" autoplay muted loop playsinline>
+                    <source src="portfolio/sp/webiste-video.mp4" type="video/mp4">
+                    Tu navegador no soporta videos.
+                </video>
+                <article>
+                    <h1>S&P Web</h1>
+                    <p class="subtitle">Identidad y sitio web creados a velocidad — dirección de arte con IA.</p>
+                </article>
+            </main>
+            <!-- 
+            =================================================================
+            --- FIN: SECCIÓN HERO (COVER) ---
+            =================================================================
+            -->
+
+            <!-- Contenido del Proyecto -->
+            <section class="nueva-seccion project-overview">
+                <h2>Resumen del proyecto</h2>
+                <p>Diseñé el logo, el branding completo y la página web para S&P – Società di Consulenza Finanziaria. Para acelerar la producción, utilicé inteligencia artificial en la generación de imágenes, el material del vídeo hero y parte de los textos, manteniendo una dirección de arte clara para que todo respirara la misma identidad. El enfoque visual buscó un aire “dolce vita” premium: fotografía cálida y elegante, y una experiencia que transmite cercanía y confianza. <br><a href="https://www.spscf.it/" target="_blank" style="color: #ffffff; text-decoration: underline;">Visitar sitio web</a></p>
+            </section>
+
+            <section class="fullwidth-image" style="background-image: url('portfolio/sp/sp-7compressed.png');"></section>
+
+            <section class="nueva-seccion project-details">
+                <div class="grid-layout">
+                    <div class="grid-item">
+                        <h3>Año</h3>
+                        <p>2025 (entrega inicial en 4–5 días)</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Mi rol en el proyecto</h3>
+                        <p><strong>Diseño de logo y sistema visual</strong> (paleta, tipografía, grillas, componentes). <strong>Dirección de arte y guidelines</strong> para la consistencia visual. <strong>Diseño UX/UI del sitio</strong> (wireframes, mockups, prototipos). <strong>Producción con IA de imágenes y material del vídeo hero</strong>. <strong>Desarrollo e integración web y optimización responsive</strong>.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Objetivo</h3>
+                        <p>Construir una identidad visual sólida y un sitio web corporativo que inspiren confianza y claridad, con una producción ágil que permitiera publicar en días sin sacrificar la calidad. Además, reflejar un estilo mediterráneo/premium que conecte emocionalmente con el público italiano.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="nueva-seccion project-problem">
+                <h2>Problema</h2>
+                <p>El cliente necesitaba una presencia digital rápida, profesional y coherente con el sector financiero: un lenguaje visual sobrio, mensajes claros y una experiencia que generara confianza desde la primera visita.</p>
+            </section>
+
+            <!-- ========= INICIO: NUEVAS SECCIONES ========= -->
+            <section class="nueva-seccion project-users">
+                <h2>Usuarios</h2>
+                <p>Personas y empresas que buscan servicios de asesoría financiera y asegurativa, y familias que planifican la sucesión y protección patrimonial.</p>
+            </section>
+
+            <section class="nueva-seccion project-use-cases">
+                <h2>Casos de uso</h2>
+                <div class="grid-layout">
+                    <div class="grid-item">
+                        <h3>Conocer la firma</h3>
+                        <p>Entender quiénes son, su enfoque y áreas de servicio.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Validar confianza</h3>
+                        <p>Revisar pilares clave como Gran Experiencia, Piena Trasparenza e Indipendenza.</p>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Passaggio generazionale</h3>
+                        <p>Informarse sobre soluciones para gestionar el traspaso generacional.</p>
+                    </div>
+                     <div class="grid-item">
+                        <h3>Conversión directa</h3>
+                        <p>Contactar por formulario o CTA sin fricción.</p>
+                    </div>
+                </div>
+            </section>
+            <!-- ========= FIN: NUEVAS SECCIONES ========= -->
+
+            <section class="fullwidth-image" style="background-image: url('portfolio/sp/sp-9compressed.png');"></section>
+
+            <section class="nueva-seccion project-process">
+                <h2>Proceso de diseño</h2>
+                <div class="grid-layout">
+                    <div class="grid-item"><span class="grid-item-numero">01</span><h3>Brief y Arquitectura</h3><p>Definición rápida de la narrativa, sitemap y jerarquías.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">02</span><h3>Identidad y UI</h3><p>Creación de logo, paleta, tipografía y componentes aplicados a wireframes y mockups.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">03</span><h3>Dirección de Arte con IA</h3><p>Generación de imágenes y clips para el hero mediante prompts controlados y edición de todo el material visual con Photoshop y after effects.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">04</span><h3>Desarrollo e Integración</h3><p>Maquetación responsive, integración del vídeo, microinteracciones y optimización de la carga.</p></div>
+                    <div class="grid-item"><span class="grid-item-numero">05</span><h3>Contenidos y QA</h3><p>Ajuste de mensajes, accesibilidad, pruebas multi-dispositivo y publicación.</p></div>
+                </div>
+            </section>
+
+            <section class="nueva-seccion project-gallery">
+                <h2>Galería</h2>
+                <div class="gallery-grid">
+                    <div class="grid-item" data-img="portfolio/sp/website-screenshotcompressed.jpeg"><img src="portfolio/sp/website-screenshotcompressed.jpeg" alt="Imagen 1" /></div>
+                    <div class="grid-item" data-img="portfolio/sp/sp-website-presentationcompressed.jpg"><img src="portfolio/sp/sp-website-presentationcompressed.jpg" alt="Imagen 2" /></div>
+                    <div class="grid-item" data-img="portfolio/sp/sp-mobilecompressed.png"><img src="portfolio/sp/sp-mobilecompressed.png" alt="Imagen 3" /></div>
+                    <div class="grid-item" data-img="portfolio/sp/sp-1compressed.png"><img src="portfolio/sp/sp-1compressed.png" alt="Imagen 4" /></div>
+                    <div class="grid-item" data-img="portfolio/sp/sp-2compressed.png"><img src="portfolio/sp/sp-2compressed.png" alt="Imagen 5" /></div>
+                    <div class="grid-item" data-img="portfolio/sp/sp-8compressed.png"><img src="portfolio/sp/sp-8compressed.png" alt="Imagen 6" /></div>
+                </div>
+            </section>
+
+            <section class="nueva-seccion project-features">
+                <h2>Características clave</h2>
+                <div class="grid-layout">
+                    <div class="grid-item"><h3>Branding Coherente + “Dolce Vita” Premium</h3><p>Logo e identidad sobrios con acentos elegantes.</p></div>
+                    <div class="grid-item"><h3>Hero con Vídeo Generado con IA</h3><p>Mensaje claro y movimiento sutil que eleva la percepción de la marca.</p></div>
+                    <div class="grid-item"><h3>Pilares Visibles en UI</h3><p>Bloques y microcopys que destacan FeeOnly, Transparencia e Independencia.</p></div>
+                    <div class="grid-item"><h3>Componentes Modulares</h3><p>Bloques reutilizables para crecer sin romper el diseño.</p></div>
+                    <div class="grid-item"><h3>Rendimiento y Responsive</h3><p>Optimización de medios y tipografías, navegación fluida en móvil y desktop.</p></div>
+                </div>
+            </section>
+
+            <section class="fullwidth-image" style="background-image: url('portfolio/sp/sp-10compressed.png');"></section>
+
+            <section class="nueva-seccion project-outcome">
+                <h2>Resultados</h2>
+                <p>Se publicó un MVP en menos de una semana con una identidad sólida, un hero memorable y un sitio listo para captar leads. Se reforzaron online los mensajes de independencia, transparencia y paso generacional, logrando una comunicación más afinada en tiempo récord.</p>
+            </section>
+
+            <section class="horizontal-scroll-section">
+                <div class="sticky-carousel-wrapper">
+                    <div class="carousel-panel"><img src="portfolio/sp/sp-3compressed.png" alt="Imagen Carrusel 1" /></div>
+                    <div class="carousel-panel"><img src="portfolio/sp/sp-4compressed.png" alt="Imagen Carrusel 2" /></div>
+                    <div class="carousel-panel"><img src="portfolio/sp/sp-5compressed.png" alt="Imagen Carrusel 3" /></div>
+                    <div class="carousel-panel"><img src="portfolio/sp/sp-6compressed.png" alt="Imagen Carrusel 4" /></div>
+                </div>
+            </section>
+
+            <section class="nueva-seccion project-learnings" style="text-align: center;">
+                <h2>Lo que aprendí</h2>
+                <p>Integré la IA en mi flujo de trabajo y eso me hizo mucho más productivo. La usé para generar y ampliar opciones visuales y luego edité las imágenes y el vídeo. El salto en productividad fue notable: pude iterar más rápido, decidir mejor y publicar en días sin perder calidad ni control del diseño.</p>
+                <div>
+                    <a href="#contact" class="cta-button">Contáctame</a>
+                    <a href="project_trakkem_pro_web.html" class="cta-button">Siguiente proyecto</a>
+                </div>
+            </section>
+        </div> <!-- Fin #main-content -->
+        
+        <!-- 
+        =================================================================
+        --- INICIO: SECCIÓN FOOTER ---
+        =================================================================
+        -->
+        <footer id="contact">
+            <div class="topic-padre"><h1 class="topic-hijo">contacto</h1></div>
+            <div class="footer-content-wrapper">
+                <img src="img/macu-logo-lightgrey-footer.png" alt="macu-logo-lightgrey-footer" />
+                <div class="footer-primary-contact">
+                    <a href="tel:+34624425822">+34 624 425 822</a>
+                    <a href="mailto:info@macudesigns.com">info@macudesigns.com</a>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-secondary-links">
+                    <a href="index.html">Inicio</a>
+                    <a href="about-me.html">Sobre mi</a>
+                    <a href="index.html#portfolio">Portafolio</a>
+                    <a href="gallery.html">Galeria</a>
+                    <a href="#contact">Contacto</a>
+                  <a href="https://www.linkedin.com/in/macudesigns/" target="_blank">LinkedIn</a>
+                  <a href="https://www.instagram.com/macudesigns_/" target="_blank">Instagram</a>
+                 <!--  <a href="#" target="_blank">EN</a>-->
+                </div>
+               <span id="copyright-line">
+  © <span id="copyright-year"></span> MacuDesign | Los derechos de los diseños, productos y proyectos mostrados en este portafolio 
+  corresponden a los clientes y empresas que financiaron su desarrollo. 
+  El material aquí publicado tiene únicamente fines de presentación y exhibición profesional, 
+  sin implicar apropiación ni cesión de la propiedad intelectual de terceros. 
+  | Moisés A. Carmona U.
+</span>
+
+            </div>
+        </footer>
+        <!-- 
+        =================================================================
+        --- FIN: SECCIÓN FOOTER ---
+        =================================================================
+        -->
+    </div> <!-- fin marco -->
+
+    <!-- Lightbox markup -->
+    <div id="lightbox-overlay" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;">
+        <img id="lightbox-img" src="" alt="" style="max-width:90vw;max-height:90vh;border-radius:20px;box-shadow:0 0 40px #000;">
+        <span id="lightbox-close" style="position:absolute;top:30px;right:40px;font-size:3rem;color:#fff;cursor:pointer;font-family:sans-serif;">&times;</span>
+    </div>
+
+    <!-- JS Librerias -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- SCRIPT PARA EL NUEVO MENÚ ---
+        const menuButton = document.getElementById('btnMobil');
+        const closeMenuButton = document.getElementById('closeMenuBtn');
+        const menuOverlay = document.getElementById('fullscreen-menu');
+        const body = document.body;
+
+        if (menuButton && menuOverlay && closeMenuButton) {
+            const toggleMenu = () => {
+                body.classList.toggle('menu-open');
+                menuOverlay.classList.toggle('open');
+            };
+            menuButton.addEventListener('click', (e) => { e.preventDefault(); toggleMenu(); });
+            closeMenuButton.addEventListener('click', (e) => { e.preventDefault(); toggleMenu(); });
+            menuOverlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => { if (menuOverlay.classList.contains('open')) toggleMenu(); });
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape" && menuOverlay.classList.contains('open')) toggleMenu();
+            });
+        }
+        
+        // --- SCRIPT PARA ACTUALIZAR AÑO DEL COPYRIGHT ---
+        const yearSpan = document.getElementById("copyright-year");
+        if(yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+        // --- ANIMACIONES CON GSAP ---
+        gsap.registerPlugin(ScrollTrigger);
+        const animationDefaults = { duration: 1, autoAlpha: 0, y: 50, ease: 'power3.out' };
+
+        // Animación Hero
+        gsap.from(".cover article > *", { ...animationDefaults, stagger: 0.2, delay: 0.5 });
+
+        // Animación para todas las secciones .nueva-seccion
+        document.querySelectorAll('.nueva-seccion').forEach(section => {
+            gsap.from(section.querySelectorAll("h2, p, ul, .grid-layout, .gallery-grid, .cta-button"), {
+                ...animationDefaults,
+                stagger: 0.15,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+
+        // --- FUNCIONALIDAD LIGHTBOX GALERÍA ---
+        const gridItems = document.querySelectorAll(".gallery-grid .grid-item");
+        const lightbox = document.getElementById('lightbox-overlay');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        gridItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const imgSrc = this.getAttribute('data-img');
+                if (imgSrc) {
+                    lightboxImg.src = imgSrc;
+                    lightbox.style.display = 'flex';
+                }
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.style.display = 'none';
+            lightboxImg.src = '';
+        };
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+        // --- SCRIPT CARRUSEL HORIZONTAL (CORREGIDO CON GSAP) ---
+        const horizontalSection = document.querySelector('.horizontal-scroll-section');
+        const carouselWrapper = horizontalSection ? horizontalSection.querySelector('.sticky-carousel-wrapper') : null;
+
+        if (horizontalSection && carouselWrapper) {
+            gsap.to(carouselWrapper, {
+                x: () => -(carouselWrapper.scrollWidth - window.innerWidth),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: horizontalSection,
+                    start: "top top",
+                    end: () => "+=" + (carouselWrapper.scrollWidth - window.innerWidth),
+                    scrub: true,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>
